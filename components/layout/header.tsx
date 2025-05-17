@@ -73,7 +73,7 @@ export function Header() {
     <header className={cn(
       "sticky top-0 z-50 w-full transition-all duration-300",
       scrolled || pathname !== "/" 
-        ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 border-b"
+        ? "bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80 border-b"
         : "bg-transparent"
     )}>
       <div className="container mx-auto px-4 md:px-6">

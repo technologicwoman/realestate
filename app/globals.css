@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
+@import "tailwindcss-animated";
+
 
 :root {
   --foreground-rgb: 0, 0, 0;

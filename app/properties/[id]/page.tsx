@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
 import { PropertyGallery } from "@/components/properties/property-gallery";
@@ -6,45 +7,50 @@ import { PropertyFeatures } from "@/components/properties/property-features";
 import { AgentInfo } from "@/components/properties/agent-info";
 import { ContactForm } from "@/components/properties/contact-form";
 
-export default function PropertyDetail() {
+import { WasiService } from "@/lib/services";
+import { PropertyViewModel } from "@/lib/domain/models";
+
+
+export default async function PropertyDetail({ params }: { params: { id: string } }) {
   // This would typically come from a database
-  const property = {
-    title: "Casa The Woods Santa Maria",
-    location: "Santa Maria Golf & Country Club, Panama",
-    price: 1250000,
-    features: {
-      bedrooms: 4,
-      bathrooms: 4.5,
-      area: 450,
-      parking: 2
-    },
-    description: "Luxurious house located in the exclusive Santa Maria Golf & Country Club. This beautiful property features modern architecture, high-end finishes, and stunning golf course views. The house offers spacious living areas, a gourmet kitchen, and a private garden perfect for entertaining.",
-    amenities: [
-      "Golf course view",
-      "Private garden",
-      "Gourmet kitchen",
-      "Smart home system",
-      "24/7 Security",
-      "Swimming pool",
-      "Home theater",
-      "Wine cellar",
-      "Gym"
-    ],
-    images: {
-      main: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-      thumbnails: [
-        "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg",
-        "https://images.pexels.com/photos/1396123/pexels-photo-1396123.jpeg",
-        "https://images.pexels.com/photos/1396124/pexels-photo-1396124.jpeg",
-        "https://images.pexels.com/photos/1396125/pexels-photo-1396125.jpeg"
-      ]
-    },
-    agent: {
-      name: "Sarah Johnson",
-      role: "Senior Real Estate Agent",
-      image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg"
-    }
+  // Get property ID from route params
+  const propertyId = parseInt(params.id);
+  
+  // Create WasiService instance
+  const WASI_BASE_URL = process.env.WASI_BASE_URL || 'https://api.wasi.co/v1';
+  const WASI_CLIENT_ID = process.env.WASI_CLIENT_ID || '';
+  const WASI_TOKEN = process.env.WASI_TOKEN || '';
+  const wasiService = new WasiService(WASI_BASE_URL, WASI_CLIENT_ID, WASI_TOKEN);
+
+  // Fetch property details
+  let property: PropertyViewModel | null = await wasiService.getPropertyById(propertyId);
+  if (!property) {
+    return notFound();
+  }
+  
+  let gallery = property.gallery[0];
+  delete gallery['id'];
+
+  let thumbnails = Object.values(gallery).map((image) => ({
+    id: image.id,
+    url: image.url,
+    url_original: image.url_original,
+    description: image.description
+  }));
+  
+  let principalFeatures = {
+    bedrooms: property.bedrooms,
+    bathrooms: property.bathrooms,
+    area: property.area,
+    parking: property.garages
   };
+
+  let agentInfo = { 
+    name: property.agency,
+    role: "Real Estate",
+    image: property.agencyLogo || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg"
+  };
+
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -65,8 +71,8 @@ export default function PropertyDetail() {
         {/* Main Content */}
         <div className="lg:col-span-2">
           <PropertyGallery
-            mainImage={property.images.main}
-            thumbnails={property.images.thumbnails}
+            mainImage={property?.mainImage.url_original}
+            thumbnails={thumbnails}
           />
 
           {/* Property Details */}
@@ -77,23 +83,23 @@ export default function PropertyDetail() {
                 <MapPin className="h-5 w-5 mr-2" />
                 <span>{property.location}</span>
               </div>
-              <PropertyFeatures {...property.features} />
+              <PropertyFeatures {...principalFeatures} />
             </div>
 
             <div>
               <h2 className="text-2xl font-semibold mb-4">Description</h2>
-              <div className="prose max-w-hidden">
-                <p className="text-muted-foreground">{property.description}</p>
+              <div className="prose max-w-hidden" dangerouslySetInnerHTML={{ __html: property.description }}>
+            
               </div>
             </div>
 
             <div>
               <h2 className="text-2xl font-semibold mb-4">Features & Amenities</h2>
               <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {property.amenities.map((feature, i) => (
+                {Object.values(property.features).map((feature, i) => (
                   <li key={i} className="flex items-center">
                     <div className="h-2 w-2 bg-primary rounded-full mr-2" />
-                    {feature}
+                    {feature.name}
                   </li>
                 ))}
               </ul>
@@ -105,12 +111,12 @@ export default function PropertyDetail() {
         <div className="lg:col-span-1">
           <Card className="p-6 sticky top-24">
             <div className="text-3xl font-bold mb-6">
-              ${property.price.toLocaleString()}
+              {property.priceLabel}
             </div>
             
             {/* Agent Info */}
             <div className="mb-6">
-              <AgentInfo {...property.agent} />
+              <AgentInfo {...agentInfo} />
             </div>
 
             {/* Schedule Visit */}
