@@ -7,6 +7,7 @@ import { PropertyViewModel } from "@/lib/domain/models";
 import { IRegion, ICity, ILocation } from "@/lib/domain/interfaces";
 import { notFound } from "next/navigation";
 
+
 export default async function PropertiesPage({
   searchParams,
 }: {

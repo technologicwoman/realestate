@@ -84,7 +84,7 @@ export class WasiService {
     }
   
     async getOutstandingProperties(): Promise<PropertyViewModel[]> {
-      const url = `${this.baseUrl}/property/search?short=true&id_status_on_page=3&take=6&order_by=created_at&id_user=30262&&=1`;
+      const url = `${this.baseUrl}/property/search?short=true&id_status_on_page=3&take=6&order_by=created_at&id_user=30262`;
       const response = await fetchWithErrorHandling<any[]>(url, {
         method: 'POST',
         headers: {

@@ -28,11 +28,11 @@ export function HeroSearch() {
   return (
     <div className="max-w-4xl mx-auto bg-white/95 dark:bg-gray-900/95 rounded-lg shadow-lg p-6 backdrop-blur-xs">
       {/* Buy/Rent Toggle */}
-      <div className="flex justify-center gap-4 mb-6">
+      <div className="flex flex-col md:flex-row justify-center md:gap-4 mb-6">
         <Button 
           size="lg" 
           variant={searchParams.type === "buy" ? "default" : "outline"}
-          className={searchParams.type !== "buy" ? "bg-white/50 dark:bg-gray-800/50" : ""}
+          className={searchParams.type !== "buy" ? "bg-white/50 text-foreground dark:bg-gray-800/50" : ""}
           onClick={() => setSearchParams(prev => ({ ...prev, type: "buy" }))}
         >
           Buy Property
@@ -40,7 +40,7 @@ export function HeroSearch() {
         <Button 
           size="lg" 
           variant={searchParams.type === "rent" ? "default" : "outline"}
-          className={searchParams.type !== "rent" ? "bg-white/50 dark:bg-gray-800/50" : ""}
+          className={searchParams.type !== "rent" ? "bg-white/50 text-foreground dark:bg-gray-800/50" : ""}
           onClick={() => setSearchParams(prev => ({ ...prev, type: "rent" }))}
         >
           Rent Property
@@ -54,7 +54,7 @@ export function HeroSearch() {
           <input
             type="text"
             placeholder="Location"
-            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50"
+            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-foreground"
             value={searchParams.location}
             onChange={(e) => setSearchParams(prev => ({ ...prev, location: e.target.value }))}
           />
@@ -62,7 +62,7 @@ export function HeroSearch() {
         <div className="relative">
           <Building2 className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <select 
-            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50"
+            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-muted-foreground"
             value={searchParams.propertyType}
             onChange={(e) => setSearchParams(prev => ({ ...prev, propertyType: e.target.value }))}
           >
@@ -76,7 +76,7 @@ export function HeroSearch() {
         <div className="relative">
           <DollarSign className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <select 
-            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50"
+            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-muted-foreground"
             value={searchParams.priceRange}
             onChange={(e) => setSearchParams(prev => ({ ...prev, priceRange: e.target.value }))}
           >
