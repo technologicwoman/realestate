@@ -1,3 +1,31 @@
+@font-face {
+  font-family: "Cannon Light";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("./assets/typography/Cannon-light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Cannon";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./assets/typography/Cannon-medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("./assets/typography/segoeuithis.ttf") format("ttf");
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
 @import "tailwindcss";
 @config "../tailwind.config.ts";
 
@@ -24,8 +52,9 @@
   --accent-foreground: 0 0% 9%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
+  --border: 46, 32%, 56%;
+  --input: 46, 32%, 56%;
+  --icon: 46, 32%, 56%;
   --ring: 0 0% 3.9%;
   --chart-1: 12 76% 61%;
   --chart-2: 173 58% 39%;
@@ -33,6 +62,10 @@
   --chart-4: 43 74% 66%;
   --chart-5: 27 87% 67%;
   --radius: 0.5rem;
+
+  --title-font: "Cannon", sans-serif;
+  --subtitle-font: "Cannon Light", sans-serif;
+  --content-font: "Roboto", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -60,7 +93,8 @@
   --accent-foreground: 0 0% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
+  --border: 46, 32%, 56%;
+  --icon: 46, 32%, 56%;
   --input: 0 0% 14.9%;
   --ring: 0 0% 83.1%;
   --chart-1: 220 70% 50%;
@@ -74,7 +108,18 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: var(--content-font);
   }
+
+
+  h1, h2 {
+    font-family: var(--title-font);
+  };
+
+  h3, h4, h5, h6 {
+    font-family: var(--subtitle-font);
+  }
+
   body {
     @apply bg-background text-foreground;
   }

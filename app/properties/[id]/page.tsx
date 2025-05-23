@@ -87,14 +87,14 @@ export default async function PropertyDetail({ params }: { params: { id: string 
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Description</h2>
+              <h2 className="text-2xl font-semibold mb-4">Descripcion</h2>
               <div className="prose max-w-hidden" dangerouslySetInnerHTML={{ __html: property.description }}>
             
               </div>
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Features & Amenities</h2>
+              <h2 className="text-2xl font-semibold mb-4">Caracteristicas y Amenidades</h2>
               <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {Object.values(property.features).map((feature, i) => (
                   <li key={i} className="flex items-center">
@@ -121,7 +121,7 @@ export default async function PropertyDetail({ params }: { params: { id: string 
 
             {/* Schedule Visit */}
             <div className="mt-6">
-              <h3 className="font-semibold mb-4">Schedule a Visit</h3>
+              <h3 className="font-semibold mb-4">Comunicate con nosotros</h3>
               <ContactForm />
             </div>
           </Card>

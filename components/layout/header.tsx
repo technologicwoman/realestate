@@ -10,6 +10,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/mode-toggle";
 
+import Image from "next/image";
+import LogoBlackYellow from "@/app/assets/images/LogoBlackYellow.png";
+
+
 type NavItem = {
   title: string;
   href: string;
@@ -77,11 +81,15 @@ export function Header() {
         : "bg-transparent"
     )}>
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
+        <div className="flex max-h-40 items-center justify-between">
+          <div className="flex p-4 items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <Building2 className="h-6 w-6" />
-              <span className="font-bold text-xl">BB Real Estate</span>
+              <Image
+                src={LogoBlackYellow}
+                alt="BB Real Estate Logo"
+                style={{ objectFit: "contain" }}
+                className="w-25 md:w-30"
+              />
             </Link>
           </div>
           

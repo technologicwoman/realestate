@@ -48,21 +48,24 @@ export function HeroSearch() {
       </div>
 
       {/* Search Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="flex flex-col">
         <div className="relative">
           <MapPin className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <input
             type="text"
             placeholder="Location"
-            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-foreground"
+            className="w-full pl-10 pr-4 py-2 border-[2px] rounded-md bg-white/50 dark:bg-gray-800/50 text-foreground"
             value={searchParams.location}
             onChange={(e) => setSearchParams(prev => ({ ...prev, location: e.target.value }))}
           />
+          <Button className="absolute border-0 rounded-l-none right-0 max-w-2xl md:mt-0" size="lg" onClick={handleSearch}>
+            <Search className="mr-2 h-5 w-5" />
+          </Button>
         </div>
-        <div className="relative">
+        {/* <div className="relative">
           <Building2 className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <select 
-            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-muted-foreground"
+            className="pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-muted-foreground scroll-y"
             value={searchParams.propertyType}
             onChange={(e) => setSearchParams(prev => ({ ...prev, propertyType: e.target.value }))}
           >
@@ -72,8 +75,9 @@ export function HeroSearch() {
             <option value="villa">Villa</option>
             <option value="office">Office</option>
           </select>
-        </div>
-        <div className="relative">
+        </div> */}
+       
+        {/* <div className="relative">
           <DollarSign className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <select 
             className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-muted-foreground"
@@ -86,11 +90,8 @@ export function HeroSearch() {
             <option value="500000-1000000">$500,000 - $1,000,000</option>
             <option value="1000000+">$1,000,000+</option>
           </select>
-        </div>
+        </div> */}
       </div>
-      <Button className="w-full mt-4" size="lg" onClick={handleSearch}>
-        <Search className="mr-2 h-5 w-5" /> Search Properties
-      </Button>
     </div>
   );
 }

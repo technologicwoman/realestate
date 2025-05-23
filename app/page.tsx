@@ -8,6 +8,9 @@ import { HeroSearch } from "@/components/properties/hero-search";
 import { WasiService } from "../lib/services";
 import { PropertyViewModel } from "../lib/domain/models";
 
+import WaterMark from "@/app/assets/images/WaterMark.png";
+
+
 export default async function Home() {
   // This is the main page of the application
   // It serves as the landing page for users to explore properties
@@ -38,20 +41,32 @@ export default async function Home() {
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Find Your Dream Home in Panama
+            Encuentra tu hogar soñado en Panamá
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-            Discover premium properties in the most sought-after locations across Panama
+            Descubre propiedades premium en las ubicaciones más buscadas de Panamá
           </p>
-          
+  
           <HeroSearch />
         </div>
       </section>
 
       {/* Featured Properties */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Featured Properties</h2>
+      <section className="relative py-16">
+        <div className="relative container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Propiedades Destacadas</h2>
+          {/* For mobile: repeated watermark using background image */}
+          <div
+            className="absolute inset-0 -z-10 bg-repeat bg-auto md:hidden"
+            style={{ backgroundImage: `url(${WaterMark.src})`, backgroundSize: "contain" }}
+          />
+          {/* For larger screens: use Image with fill */}
+          <Image
+            src={WaterMark}
+            alt="Luxury Panama Real Estate"
+            fill
+            className="object-cover -z-10 hidden md:block"
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.map((feauredProperty) => (
               <Card key={feauredProperty.id} className="overflow-hidden">
@@ -60,22 +75,22 @@ export default async function Home() {
                     src={feauredProperty.mainImage.url}
                     alt={`Featured Property ${feauredProperty.title}`}
                     fill
-                    className="object-cover"
+                  className="object-cover"
                   />
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{feauredProperty.title}</h3>
-                  <MapPin className="h-5 w-5 text-muted-foreground" />
+                  <MapPin className="h-5 w-5 text-icon" />
                   <span className="text-sm text-muted-foreground">
                     {feauredProperty.location}
                   </span>
                   <p className="text-muted-foreground mb-4">
-                    {feauredProperty.bathrooms} Baths • {feauredProperty.bedrooms} Rooms • {feauredProperty.area}m² 
+                    {feauredProperty.bathrooms} Baños • {feauredProperty.bedrooms} Hab • {feauredProperty.area}m² 
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-bold">{feauredProperty.priceLabel}</span>
                     <Button variant="outline" asChild>
-                      <Link href={`/properties/${feauredProperty.id}?title= ${feauredProperty.title}`}>View Details</Link>
+                      <Link href={`/properties/${feauredProperty.id}?title=${feauredProperty.title}`}>View Details</Link>
                     </Button>
                   </div>
                 </CardContent>
@@ -84,7 +99,7 @@ export default async function Home() {
           </div>
           <div className="text-center mt-12">
             <Button size="lg" variant="outline" asChild>
-              <Link href="/properties">View All Properties</Link>
+              <Link href="/properties">Ver más propiedades</Link>
             </Button>
           </div>
         </div>

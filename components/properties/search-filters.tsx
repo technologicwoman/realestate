@@ -13,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Image from "next/image";
+import WaterMark from "@/app/assets/images/WaterMark.png";
 import { PropertyType } from "@/lib/types";
 
 export function SearchFilters() {
@@ -44,7 +46,13 @@ export function SearchFilters() {
   };
 
   return (
-    <div className="space-y-6 p-6 bg-card rounded-lg border">
+    <div className="relative space-y-6 p-6 rounded-lg border">
+      <Image
+        src={WaterMark}
+        alt="Luxury Panama Real Estate"
+        fill
+        className="object-cover -z-10"
+        />
       <div className="space-y-2">
         <Label>Property Type</Label>
         <Select

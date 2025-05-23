@@ -8,7 +8,7 @@ import { Footer } from '@/components/layout/footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'BB Real Estate | Premium Properties in Panama',
+  title: 'B&B Real Estate | Premium Properties in Panama',
   description: 'Find your dream property with BB Real Estate - the leading real estate agency in Panama offering premium residential and commercial properties.',
 };
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

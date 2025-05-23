@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { Building2, Mail, Phone, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
 
+import Image from "next/image";
+import LogoBlackYellow from "@/app/assets/images/LogoBlackYellow.png";
+
 export function Footer() {
   return (
     <footer className="border-t bg-muted/40">
@@ -8,8 +11,14 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="flex items-center space-x-2">
-              <Building2 className="h-6 w-6" />
-              <span className="font-bold text-xl">BB Real Estate</span>
+            <Link href="/" className="flex items-center space-x-2">
+              <Image
+                src={LogoBlackYellow}
+                alt="BB Real Estate Logo"
+                style={{ objectFit: "contain" }}
+                className="w-25 md:w-30"
+              />
+            </Link>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
               Your trusted partner in finding the perfect property in Panama. 
@@ -19,7 +28,7 @@ export function Footer() {
               <Link 
                 href="https://facebook.com" 
                 target="_blank" 
-                className="text-muted-foreground hover:text-primary"
+                className="text-icon hover:text-primary"
               >
                 <Facebook className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
@@ -27,7 +36,7 @@ export function Footer() {
               <Link 
                 href="https://instagram.com" 
                 target="_blank" 
-                className="text-muted-foreground hover:text-primary"
+                className="text-icon hover:text-primary"
               >
                 <Instagram className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
@@ -35,7 +44,7 @@ export function Footer() {
               <Link 
                 href="https://twitter.com" 
                 target="_blank" 
-                className="text-muted-foreground hover:text-primary"
+                className="text-icon hover:text-primary"
               >
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
@@ -139,17 +148,17 @@ export function Footer() {
             <h3 className="text-lg font-medium">Contact Information</h3>
             <ul className="mt-4 space-y-4 text-sm">
               <li className="flex items-start space-x-2">
-                <MapPin className="h-5 w-5 text-primary shrink-0" />
+                <MapPin className="h-5 w-5 text-icon shrink-0" />
                 <span className="text-muted-foreground">
                   Calle 50, Edificio Plaza 50, Suite 302, Panama City, Republic of Panama
                 </span>
               </li>
               <li className="flex items-center space-x-2">
-                <Phone className="h-5 w-5 text-primary shrink-0" />
+                <Phone className="h-5 w-5 text-icon shrink-0" />
                 <span className="text-muted-foreground">+507 123-4567</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Mail className="h-5 w-5 text-primary shrink-0" />
+                <Mail className="h-5 w-5 text-icon shrink-0" />
                 <span className="text-muted-foreground">info@bbrealestate.com.pa</span>
               </li>
             </ul>
@@ -159,7 +168,7 @@ export function Footer() {
         <div className="mt-12 border-t pt-8">
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <p className="text-center text-sm text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} BB Real Estate. All rights reserved.
+              © {new Date().getFullYear()} B&B Real Estate. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground md:justify-end">
               <Link href="/privacy-policy" className="hover:text-primary">

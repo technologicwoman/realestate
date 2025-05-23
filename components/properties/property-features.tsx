@@ -12,11 +12,11 @@ export function PropertyFeatures({ bedrooms, bathrooms, area, parking }: Propert
     <div className="flex flex-wrap gap-6">
       <div className="flex items-center">
         <Bed className="h-5 w-5 mr-2" />
-        <span>{bedrooms} Bedrooms</span>
+        <span>{bedrooms} Habitaciones</span>
       </div>
       <div className="flex items-center">
         <Bath className="h-5 w-5 mr-2" />
-        <span>{bathrooms} Bathrooms</span>
+        <span>{bathrooms} Baños</span>
       </div>
       <div className="flex items-center">
         <Maximize2 className="h-5 w-5 mr-2" />
@@ -24,7 +24,7 @@ export function PropertyFeatures({ bedrooms, bathrooms, area, parking }: Propert
       </div>
       <div className="flex items-center">
         <Car className="h-5 w-5 mr-2" />
-        <span>{parking} Parking spots</span>
+        <span>{parking} Estacionamientos</span>
       </div>
     </div>
   );
