@@ -9,6 +9,7 @@ import { WasiService } from "../lib/services";
 import { PropertyViewModel } from "../lib/domain/models";
 
 import WaterMark from "@/app/assets/images/WaterMark.png";
+import HeroBg from "@/app/assets/images/HeroBg.png";
 
 
 export default async function Home() {
@@ -26,13 +27,21 @@ export default async function Home() {
   let featuredProperties: PropertyViewModel[] = [];
   featuredProperties = await wasiService.getOutstandingProperties();
 
+  // Fetch all zones for the search
+  let zones = await wasiService.getAllZones();
+
+  // Convert zone classes to plain objects for client component
+  const serializedZones = zones.map(zone => ({
+    id: zone.id,
+    displayString: zone.getString(),
+  }));
 
   return (
     <>
       {/* Hero Section with Integrated Search */}
       <section className="relative h-[90vh] flex items-center justify-center">
         <Image
-          src="https://images.pexels.com/photos/1681453/pexels-photo-1681453.jpeg"
+          src={HeroBg}
           alt="Luxury Panama Real Estate"
           fill
           className="object-cover"
@@ -47,7 +56,7 @@ export default async function Home() {
             Descubre propiedades premium en las ubicaciones más buscadas de Panamá
           </p>
   
-          <HeroSearch />
+          <HeroSearch zones={serializedZones} />
         </div>
       </section>
 

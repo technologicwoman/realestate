@@ -80,7 +80,7 @@
   --background: 0 0% 3.9%;
   --foreground: 0 0% 98%;
   --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
+  --card-foreground: 0 0% 98%; 
   --popover: 0 0% 3.9%;
   --popover-foreground: 0 0% 98%;
   --primary: 0 0% 98%;
@@ -110,7 +110,10 @@
     @apply border-border;
     font-family: var(--content-font);
   }
-
+  
+  header a {
+    font-family: var(--title-font);
+  }
 
   h1, h2 {
     font-family: var(--title-font);
@@ -119,6 +122,7 @@
   h3, h4, h5, h6 {
     font-family: var(--subtitle-font);
   }
+
 
   body {
     @apply bg-background text-foreground;

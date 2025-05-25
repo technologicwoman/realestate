@@ -1,70 +1,90 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { PropertyCard } from "@/components/properties/property-card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-// This would typically come from your API
-const ITEMS_PER_PAGE = 9;
+import { PropertyViewModel } from "@/lib/domain/models";
 
 interface PropertyListProps {
+  properties: PropertyViewModel[];
+  currentPage: number;
+  totalPages: number;
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export function PropertyList({ searchParams }: PropertyListProps) {
-  const [currentPage, setCurrentPage] = useState(1);
-  
-  // This is mock data - replace with actual API call
-  const properties = Array.from({ length: 20 }, (_, i) => ({
-    id: `prop-${i + 1}`,
-    title: `Luxury Property ${i + 1}`,
-    location: "Costa del Este, Panama",
-    price: 450000 + (i * 50000),
-    features: {
-      bedrooms: 3,
-      bathrooms: 2,
-      area: 150,
-    },
-    image: `https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg`
-  }));
+export function PropertyList({ properties, currentPage, totalPages, searchParams }: PropertyListProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParamsObj = useSearchParams();
 
-  const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedProperties = properties.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  // Function to handle pagination changes
+  const handlePageChange = (newPage: number) => {
+    // Create a new URLSearchParams object from the current search params
+    const params = new URLSearchParams(searchParamsObj.toString());
+    
+    // Update the page parameter
+    params.set('page', newPage.toString());
+    
+    // Navigate to the new URL
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedProperties.map((property) => (
-          <PropertyCard key={property.id} property={property} />
-        ))}
-      </div>
+      {properties.length === 0 ? (
+        <div className="text-center py-12">
+          <h3 className="text-xl font-medium">No properties found</h3>
+          <p className="text-muted-foreground mt-2">Try adjusting your search filters</p>
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {properties.map((property) => (
+              <PropertyCard 
+                key={property.id} 
+                property={{
+                  id: property.id.toString(),
+                  title: property.title,
+                  location: property.location,
+                  price: property.price,
+                  features: {
+                    bedrooms: property.bedrooms,
+                    bathrooms: property.bathrooms,
+                    area: property.area,
+                  },
+                  image: property.mainImage.url
+                }} 
+              />
+            ))}
+          </div>
 
-      {/* Pagination */}
-      <div className="mt-8 flex items-center justify-center gap-4">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        
-        <span className="text-sm">
-          Page {currentPage} of {totalPages}
-        </span>
-        
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronRight className="h-4 w-4" />
-        </Button>
-      </div>
+          {/* Pagination */}
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            
+            <span className="text-sm">
+              Page {currentPage} of {totalPages}
+            </span>
+            
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages || properties.length < 9}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

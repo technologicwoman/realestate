@@ -10,6 +10,10 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'B&B Real Estate | Premium Properties in Panama',
   description: 'Find your dream property with BB Real Estate - the leading real estate agency in Panama offering premium residential and commercial properties.',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+  }
 };
 
 export default function RootLayout({

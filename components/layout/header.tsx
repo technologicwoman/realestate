@@ -100,7 +100,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary flex items-center gap-1",
+                  "text-sm text font-medium transition-colors hover:text-primary flex items-center gap-1",
                   pathname === item.href
                     ? "text-primary"
                     : "text-muted-foreground"

@@ -44,7 +44,7 @@ export class PropertyMapper {
       bedrooms: apiProperty.bedrooms,
       bathrooms: apiProperty.bathrooms,
       area: parseFloat(apiProperty.area || '0'),
-      agency: `${apiProperty.user_data.first_name} ${apiProperty.user_data.last_name}`,
+      agency: `${apiProperty.user_data?.first_name} ${apiProperty.user_data?.last_name}`,
       gallery: apiProperty?.galleries,
       features: apiProperty?.features,
       garages: apiProperty.garages,
