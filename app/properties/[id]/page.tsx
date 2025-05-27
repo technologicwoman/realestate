@@ -57,11 +57,11 @@ export default async function PropertyDetail({ params }: { params: { id: string 
       {/* Breadcrumb */}
       <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
         <Link href="/" className="hover:text-primary">
-          Home
+          Inicio
         </Link>
         <span>/</span>
         <Link href="/properties" className="hover:text-primary">
-          Properties
+          Propiedades
         </Link>
         <span>/</span>
         <span className="text-foreground">{property.title}</span>
@@ -96,11 +96,13 @@ export default async function PropertyDetail({ params }: { params: { id: string 
             <div>
               <h2 className="text-2xl font-semibold mb-4">Caracteristicas y Amenidades</h2>
               <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {Object.values(property.features).map((feature, i) => (
-                  <li key={i} className="flex items-center">
-                    <div className="h-2 w-2 bg-primary rounded-full mr-2" />
-                    {feature.name}
-                  </li>
+                {Object.values(property.features).map((featureType, i) => (
+                  Object.values(featureType).map((feature, j) => (
+                    <li key={`${i}-${j}`} className="flex items-center">
+                      <div className="h-2 w-2 bg-primary rounded-full mr-2" />
+                      {feature.nombre}
+                    </li>
+                  ))
                 ))}
               </ul>
             </div>

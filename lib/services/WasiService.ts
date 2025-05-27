@@ -180,8 +180,11 @@ export class WasiService {
         ...params
       };
       if (params.type) {
-        filters.for_rent = params.type === 'rent' ? 1 : 0;
-        filters.for_sale = params.type === 'buy' ? 1 : 0;
+        filters.for_rent = params.type === 'rent' ? 'true' : 'false';
+        filters.for_sale = params.type === 'buy' ? 'true' : 'false';
+        if (params.type === 'project') {
+          filters.id_property_condition = 3 // project
+        }
       }
       if (params.location){
         filters.id_zone = params.location;
@@ -198,6 +201,7 @@ export class WasiService {
       const urlStringParameters = new URLSearchParams(filters).toString();
       // Construct the URL with base URL and parameters string
       const url = `${this.baseUrl}/property/search?short=true&order_by=created_at&${urlStringParameters}`;
+      
       const response = await fetchWithErrorHandling<IProperty[]>(url, {
         method: 'POST',
         headers: {

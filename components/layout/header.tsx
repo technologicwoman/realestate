@@ -22,36 +22,26 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    title: "Home",
+    title: "Inicio",
     href: "/",
     icon: <Home className="h-4 w-4" />,
   },
   {
-    title: "Buy",
-    href: "/properties/buy",
+    title: "Comprar",
+    href: "/properties?type=buy",
     icon: <Building2 className="h-4 w-4" />,
   },
   {
-    title: "Rent",
-    href: "/properties/rent",
+    title: "Alquilar",
+    href: "/properties?type=rent",
     icon: <Building className="h-4 w-4" />,
-  },
-  {
-    title: "Locations",
-    href: "/locations",
-    icon: <MapPin className="h-4 w-4" />,
-  },
-  {
-    title: "Agents",
-    href: "/agents",
-    icon: <Phone className="h-4 w-4" />,
   },
   {
     title: "About",
     href: "/about",
   },
   {
-    title: "Contact",
+    title: "Contacto",
     href: "/contact",
   },
 ];

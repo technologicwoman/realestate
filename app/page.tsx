@@ -42,7 +42,7 @@ export default async function Home() {
       <section className="relative h-[90vh] flex items-center justify-center">
         <Image
           src={HeroBg}
-          alt="Luxury Panama Real Estate"
+          alt="Bienes Raíces de Lujo en Panamá"
           fill
           className="object-cover"
           priority
@@ -72,7 +72,7 @@ export default async function Home() {
           {/* For larger screens: use Image with fill */}
           <Image
             src={WaterMark}
-            alt="Luxury Panama Real Estate"
+            alt="Bienes Raíces de Lujo en Panamá"
             fill
             className="object-cover -z-10 hidden md:block"
           />
@@ -82,9 +82,9 @@ export default async function Home() {
                 <div className="relative h-64">
                   <Image
                     src={feauredProperty.mainImage.url}
-                    alt={`Featured Property ${feauredProperty.title}`}
+                    alt={`Propiedad Destacada ${feauredProperty.title}`}
                     fill
-                  className="object-cover"
+                    className="object-cover"
                   />
                 </div>
                 <CardContent className="p-6">
@@ -99,7 +99,7 @@ export default async function Home() {
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-bold">{feauredProperty.priceLabel}</span>
                     <Button variant="outline" asChild>
-                      <Link href={`/properties/${feauredProperty.id}?title=${feauredProperty.title}`}>View Details</Link>
+                      <Link href={`/properties/${feauredProperty.id}?title=${feauredProperty.title}`}>Ver Detalles</Link>
                     </Button>
                   </div>
                 </CardContent>
@@ -117,20 +117,20 @@ export default async function Home() {
       {/* Why Choose Us */}
       <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose BB Real Estate</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Por Qué Elegir BB Real Estate</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: "Expert Local Knowledge",
-                description: "Over 15 years of experience in the Panama real estate market"
+                title: "Conocimiento Local Experto",
+                description: "Más de 15 años de experiencia en el mercado inmobiliario de Panamá"
               },
               {
-                title: "Premium Properties",
-                description: "Carefully curated selection of the finest properties in Panama"
+                title: "Propiedades Premium",
+                description: "Selección cuidadosamente curada de las mejores propiedades en Panamá"
               },
               {
-                title: "Personalized Service",
-                description: "Dedicated agents providing tailored solutions for your needs"
+                title: "Servicio Personalizado",
+                description: "Agentes dedicados que ofrecen soluciones adaptadas a tus necesidades"
               }
             ].map((item, i) => (
               <Card key={i} className="text-center p-6">

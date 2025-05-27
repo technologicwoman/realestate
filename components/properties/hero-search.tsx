@@ -21,7 +21,7 @@ export function HeroSearch({ zones }: HeroSearchProps) {
     type: "buy",
     location: "",
     propertyType: "",
-    priceRange: "",
+    priceRange: ""
   });
   const [searchText, setSearchText] = useState("");
   const [filteredZones, setFilteredZones] = useState<SerializedZone[]>([]);
@@ -58,7 +58,7 @@ export function HeroSearch({ zones }: HeroSearchProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto dark:bg-gray-900/95 rounded-lg shadow-lg p-6 backdrop-blur-xs">
+    <div className="max-w-4xl mx-auto dark:bg-gray-900/95 rounded-lg shadow-lg p-6">
       {/* Buy/Rent Toggle */}
       <div className="flex flex-col md:flex-row justify-center md:gap-4 mb-6">
         <Button
@@ -83,7 +83,19 @@ export function HeroSearch({ zones }: HeroSearchProps) {
           }
           onClick={() => setSearchParams((prev) => ({ ...prev, type: "rent" }))}
         >
-          Renta
+          Alquiler
+        </Button>
+        <Button
+          size="lg"
+          variant={searchParams.type === "project" ? "default" : "outline"}
+          className={
+            searchParams.type !== "project"
+              ? "bg-white/90 text-foreground dark:bg-gray-800/50"
+              : ""
+          }
+          onClick={() => setSearchParams((prev) => ({ ...prev, type: "project" }))}
+        >
+          Proyecto
         </Button>
       </div>
 

@@ -14,15 +14,15 @@ export function Footer() {
             <Link href="/" className="flex items-center space-x-2">
               <Image
                 src={LogoBlackYellow}
-                alt="BB Real Estate Logo"
+                alt="Logo BB Real Estate"
                 style={{ objectFit: "contain" }}
                 className="w-25 md:w-30"
               />
             </Link>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              Your trusted partner in finding the perfect property in Panama. 
-              With over 15 years of experience in the local market.
+              Su socio de confianza para encontrar la propiedad perfecta en Panamá.
+              Con más de 15 años de experiencia en el mercado local.
             </p>
             <div className="mt-6 flex space-x-4">
               <Link 
@@ -53,14 +53,14 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-medium">Quick Links</h3>
+            <h3 className="text-lg font-medium">Enlaces Rápidos</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link 
                   href="/properties/buy" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Properties for Sale
+                  Propiedades en Venta
                 </Link>
               </li>
               <li>
@@ -68,7 +68,7 @@ export function Footer() {
                   href="/properties/rent" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Properties for Rent
+                  Propiedades en Alquiler
                 </Link>
               </li>
               <li>
@@ -76,7 +76,7 @@ export function Footer() {
                   href="/agents" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Our Agents
+                  Nuestros Agentes
                 </Link>
               </li>
               <li>
@@ -84,7 +84,7 @@ export function Footer() {
                   href="/about" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  About Us
+                  Sobre Nosotros
                 </Link>
               </li>
               <li>
@@ -92,21 +92,21 @@ export function Footer() {
                   href="/contact" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Contact Us
+                  Contáctenos
                 </Link>
               </li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium">Popular Areas</h3>
+            <h3 className="text-lg font-medium">Áreas Populares</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link 
                   href="/locations/panama-city" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Panama City
+                  Ciudad de Panamá
                 </Link>
               </li>
               <li>
@@ -122,7 +122,7 @@ export function Footer() {
                   href="/locations/punta-pacifica" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Punta Pacifica
+                  Punta Pacífica
                 </Link>
               </li>
               <li>
@@ -145,12 +145,12 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-medium">Contact Information</h3>
+            <h3 className="text-lg font-medium">Información de Contacto</h3>
             <ul className="mt-4 space-y-4 text-sm">
               <li className="flex items-start space-x-2">
                 <MapPin className="h-5 w-5 text-icon shrink-0" />
                 <span className="text-muted-foreground">
-                  Calle 50, Edificio Plaza 50, Suite 302, Panama City, Republic of Panama
+                  Calle 50, Edificio Plaza 50, Suite 302, Ciudad de Panamá, República de Panamá
                 </span>
               </li>
               <li className="flex items-center space-x-2">
@@ -168,17 +168,17 @@ export function Footer() {
         <div className="mt-12 border-t pt-8">
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <p className="text-center text-sm text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} B&B Real Estate. All rights reserved.
+              © {new Date().getFullYear()} B&B Real Estate. Todos los derechos reservados.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground md:justify-end">
               <Link href="/privacy-policy" className="hover:text-primary">
-                Privacy Policy
+                Política de Privacidad
               </Link>
               <Link href="/terms-of-service" className="hover:text-primary">
-                Terms of Service
+                Términos de Servicio
               </Link>
               <Link href="/cookie-policy" className="hover:text-primary">
-                Cookie Policy
+                Política de Cookies
               </Link>
             </div>
           </div>
