@@ -11,10 +11,11 @@ import { WasiService } from "@/lib/services";
 import { PropertyViewModel } from "@/lib/domain/models";
 
 
-export default async function PropertyDetail({ params }: { params: { id: string } }) {
+export default async function PropertyDetail({ params }: { params: Promise<{ id: string }>  }) {
   // This would typically come from a database
   // Get property ID from route params
-  const propertyId = parseInt(params.id);
+  const { id } = await params;
+  const propertyId = parseInt(id);
   
   // Create WasiService instance
   const WASI_BASE_URL = process.env.WASI_BASE_URL || 'https://api.wasi.co/v1';
@@ -28,9 +29,7 @@ export default async function PropertyDetail({ params }: { params: { id: string 
     return notFound();
   }
   
-  let gallery = property.gallery[0];
-  delete gallery['id'];
-
+  const gallery = property.gallery || {};
   let thumbnails = Object.values(gallery).map((image) => ({
     id: image.id,
     url: image.url,
@@ -97,7 +96,7 @@ export default async function PropertyDetail({ params }: { params: { id: string 
               <h2 className="text-2xl font-semibold mb-4">Caracteristicas y Amenidades</h2>
               <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {Object.values(property.features).map((featureType, i) => (
-                  Object.values(featureType).map((feature, j) => (
+                  Object.values(featureType).map((feature: any, j) => (
                     <li key={`${i}-${j}`} className="flex items-center">
                       <div className="h-2 w-2 bg-primary rounded-full mr-2" />
                       {feature.nombre}

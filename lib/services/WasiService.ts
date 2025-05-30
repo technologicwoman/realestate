@@ -110,8 +110,10 @@ export class WasiService {
       });
       
       // Map the response to PropertyViewModel
-      delete response['status'];``
-      delete response['total'];
+      const statusKey = 'status';
+      const totalKey = 'total';
+      delete response[statusKey as keyof typeof response];
+      delete response[totalKey as keyof typeof response];
       const properties: PropertyViewModel[] = Object.values(response).map((property: IProperty) => {
         return PropertyMapper.toViewModel(property);
       });

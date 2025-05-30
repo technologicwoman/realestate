@@ -37,7 +37,7 @@ const navItems: NavItem[] = [
     icon: <Building className="h-4 w-4" />,
   },
   {
-    title: "About",
+    title: "Nosotros",
     href: "/about",
   },
   {

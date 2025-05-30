@@ -1,11 +1,11 @@
-import { IProperty } from "../interfaces/IProperty";
+import { IProperty, IMainImage } from "../interfaces/IProperty";
 
 export interface PropertyViewModel { // TODO: Speficy the type of objects for multiple CSM services 
   id: number;
   title: string;
   price: number;
   priceLabel: string;
-  mainImage: object;
+  mainImage: IMainImage;
   location: string;
   type: string;
   bedrooms: number;
@@ -13,8 +13,8 @@ export interface PropertyViewModel { // TODO: Speficy the type of objects for mu
   area: number;
   agency: string;
   agencyLogo?: string;
-  gallery?: object[];
-  features?: object;   
+  gallery: object;
+  features: object;   
   garages: number;
   description: string; 
 }
@@ -33,6 +33,11 @@ export class PropertyMapper {
       apiProperty.country_label
     ].filter(Boolean).join(', ');
 
+    let gallery = apiProperty.galleries ? apiProperty.galleries[0] : {'id': null};
+    const IdKey = "id";
+    delete gallery[IdKey as keyof typeof gallery];
+    let features = apiProperty.features ? apiProperty.features : {};
+
     return {
       id: apiProperty.id_property,
       title: apiProperty.title,
@@ -44,9 +49,9 @@ export class PropertyMapper {
       bedrooms: apiProperty.bedrooms,
       bathrooms: apiProperty.bathrooms,
       area: parseFloat(apiProperty.area || '0'),
-      agency: `${apiProperty.user_data?.first_name} ${apiProperty.user_data?.last_name}`,
-      gallery: apiProperty?.galleries,
-      features: apiProperty?.features,
+      agency: "B&B Real Estate", // Placeholder for agency name
+      gallery: gallery,
+      features: features,
       garages: apiProperty.garages,
       description: apiProperty.observations,
     };

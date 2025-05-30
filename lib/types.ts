@@ -57,10 +57,3 @@ export interface Agent {
   listings?: number;
   experience?: number; // in years
 }
-
-export interface Location {
-  id: string;
-  name: string;
-  city: string;
-  description: string;
-  imag

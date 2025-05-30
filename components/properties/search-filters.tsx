@@ -17,7 +17,11 @@ import Image from "next/image";
 import WaterMark from "@/app/assets/images/WaterMark.png";
 import { PropertyType } from "@/lib/types";
 
-export function SearchFilters() {
+export function SearchFilters({
+  zones,
+}: {
+  zones: { id: number; displayString: string }[];
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   

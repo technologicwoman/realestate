@@ -10,7 +10,7 @@ const ITEMS_PER_PAGE = 9;
 export default async function PropertiesPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   // Ensure searchParams is awaited before use
   const params = await Promise.resolve(searchParams);
@@ -61,7 +61,7 @@ export default async function PropertiesPage({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Properties</h1>
+      <h1 className="text-3xl font-bold mb-8">Búsqueda Avanzada</h1>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-1">
           <SearchFilters zones={serializedZones} />

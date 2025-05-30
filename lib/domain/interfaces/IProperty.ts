@@ -1,3 +1,13 @@
+interface IMainImage {
+    id_gallery: string,
+    id_image: string,
+    url: string,
+    url_big: string,
+    url_original: string,
+    description: string,
+    position: string
+};
+
 interface IProperty {
     id_property: number,
     id_company: number,
@@ -62,7 +72,7 @@ interface IProperty {
     id_label: string,
     label: string,
     label_color: string,
-    main_image: object,
+    main_image: IMainImage,
     galleries: object[],
     features: object[],
     registration_number: string,
@@ -81,4 +91,4 @@ interface IProperty {
     link: string
 }
 
-export type { IProperty }
+export type { IProperty , IMainImage}
