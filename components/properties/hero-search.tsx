@@ -11,11 +11,18 @@ interface SerializedZone {
   displayString: string;
 }
 
+interface serializedPropertyTypes {
+  id: number;
+  name: string;
+  displayName: string;
+} 
+
 interface HeroSearchProps {
   zones: SerializedZone[];
+  propertyTypes: serializedPropertyTypes[]
 }
 
-export function HeroSearch({ zones }: HeroSearchProps) {
+export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
   const router = useRouter();
   const [searchParams, setSearchParams] = useState({
     type: "buy",
@@ -58,7 +65,7 @@ export function HeroSearch({ zones }: HeroSearchProps) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto dark:bg-gray-900/95 rounded-lg shadow-lg p-6">
+    <div className="max-w-4xl mx-auto dark:bg-gray-900/95 rounded-lg shadow-lg p-6 gap-2">
       {/* Buy/Rent Toggle */}
       <div className="flex flex-col md:flex-row justify-center md:gap-4 mb-6">
         <Button
@@ -100,8 +107,23 @@ export function HeroSearch({ zones }: HeroSearchProps) {
       </div>
 
       {/* Search Filters */}
-      <div className="flex flex-col">
+      <div className="flex flex-col md:flex-row gap-4 items-center">
         <div className="relative">
+          <Building2 className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
+          <select
+            className="pl-10 px-4 py-2 border-[2px] rounded-md bg-white/90 dark:bg-gray-800/50 text-muted-foreground scroll-y"
+            value={searchParams.propertyType}
+            onChange={(e) => setSearchParams(prev => ({ ...prev, propertyType: e.target.value }))}
+          >
+            <option value="">Tipo de Propiedad</option>
+            {propertyTypes.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.displayName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="relative flex-1">
           <MapPin className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <input
             type="text"
@@ -142,20 +164,7 @@ export function HeroSearch({ zones }: HeroSearchProps) {
             </div>
           )}
         </div>
-        {/* <div className="relative">
-          <Building2 className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-          <select 
-            className="pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-muted-foreground scroll-y"
-            value={searchParams.propertyType}
-            onChange={(e) => setSearchParams(prev => ({ ...prev, propertyType: e.target.value }))}
-          >
-            <option value="">Property Type</option>
-            <option value="apartment">Apartment</option>
-            <option value="house">House</option>
-            <option value="villa">Villa</option>
-            <option value="office">Office</option>
-          </select>
-        </div> */}
+        
        
         {/* <div className="relative">
           <DollarSign className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />

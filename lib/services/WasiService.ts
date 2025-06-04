@@ -1,5 +1,5 @@
-import { ICity, ILocation, IProperty, IRegion, IZone } from "../domain/interfaces";
-import { PropertyViewModel, PropertyMapper, ZoneViewModel, ZoneMapper, LocationViewModel, LocationMapper, CityViewModel, CityMapper } from "../domain/models";
+import { ICity, ILocation, IProperty, IRegion, IZone, IPropertyType } from "../domain/interfaces";
+import { PropertyViewModel, PropertyMapper, PropertyTypeMapper, PropertyTypeViewModel, ZoneViewModel, ZoneMapper, LocationViewModel, LocationMapper, CityViewModel, CityMapper } from "../domain/models";
 import { fetchWithErrorHandling } from "./common";
 
 
@@ -194,6 +194,9 @@ export class WasiService {
       if (params.skip) {
         filters.skip = params.skip;
       }
+      if (params.propertyType) {
+        filters.id_property_type = params.propertyType;
+      }
       return filters;
     };
     
@@ -224,6 +227,31 @@ export class WasiService {
       properties = properties.filter(property => !isNaN(property.id));
       
       return properties;
+    }
+
+    async getPropertyTypes(): Promise<PropertyTypeViewModel[]> {
+      const url = `${this.baseUrl}/property-type/all`;
+      const response = await fetchWithErrorHandling<Record<string, IPropertyType>>(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id_company: this.clientId,
+          wasi_token: this.token
+        })
+      });
+      console.log("Property Types Response:", response);
+      const statusKey = 'status';
+      const totalKey = 'total';
+      delete response[statusKey as keyof typeof response];
+      delete response[totalKey as keyof typeof response];
+      // Convert record to array and map to view models
+      const propertyTypes: PropertyTypeViewModel[] = Object.values(response).map((propertyType: IPropertyType) => {
+        return PropertyTypeMapper.toViewModel(propertyType);
+      });
+      
+      return propertyTypes;
     }
   
 }

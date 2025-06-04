@@ -6,7 +6,7 @@ import { Building2, Search, MapPin, DollarSign } from "lucide-react";
 import { HeroSearch } from "@/components/properties/hero-search";
 
 import { WasiService } from "../lib/services";
-import { PropertyViewModel } from "../lib/domain/models";
+import { PropertyViewModel, PropertyTypeViewModel } from "../lib/domain/models";
 
 import WaterMark from "@/app/assets/images/WaterMark.png";
 import HeroBg from "@/app/assets/images/HeroBg.png";
@@ -30,11 +30,23 @@ export default async function Home() {
   // Fetch all zones for the search
   let zones = await wasiService.getAllZones();
 
+  // Fetch property types
+  let propertyTypes: PropertyTypeViewModel[] = [];
+  propertyTypes = await wasiService.getPropertyTypes();
+
   // Convert zone classes to plain objects for client component
   const serializedZones = zones.map(zone => ({
     id: zone.id,
     displayString: zone.getString(),
   }));
+  
+  // Convert property types to plain objects for client component
+  const serializedPropertyTypes = propertyTypes.map(type => ({
+    id: type.id,
+    name: type.name,
+    displayName: type.displayName
+  }));
+  
 
   return (
     <>
@@ -56,7 +68,7 @@ export default async function Home() {
             Descubre propiedades premium en las ubicaciones más buscadas de Panamá
           </p>
   
-          <HeroSearch zones={serializedZones} />
+          <HeroSearch zones={serializedZones} propertyTypes={serializedPropertyTypes} />
         </div>
       </section>
 

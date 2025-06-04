@@ -47,6 +47,26 @@ export class ZoneViewModel {
         ].filter(Boolean);
         return parts.join(", ");
     }
+    
+    toPlainObject() {
+        return {
+            id: this.id,
+            name: this.name,
+            city_id: this.city_id,
+            city_name: this.city_name,
+            location_id: this.location_id,
+            location_name: this.location_name,
+            owner: this.owner,
+            country_id: this.country_id,
+            country_name: this.country_name,
+            outstanding: this.outstanding,
+            displayString: this.getString() // Include the result of the getString function
+        };
+    }
+    
+    static toPlainObjects(zones: ZoneViewModel[]) {
+        return zones.map(zone => zone.toPlainObject());
+    }
 }
 
 export class ZoneMapper {
