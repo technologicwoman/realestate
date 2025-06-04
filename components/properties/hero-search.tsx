@@ -10,8 +10,12 @@ import {
   SelectGroup, 
   SelectItem, 
   SelectTrigger, 
-  SelectValue 
+  SelectValue,
+  SelectLabel
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // Define a simpler interface for the serialized zones
 interface SerializedZone {
@@ -39,19 +43,18 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
     priceRange: ""
   });
   const [searchText, setSearchText] = useState("");
-  const [filteredZones, setFilteredZones] = useState<SerializedZone[]>([]);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [filteredZones, setFilteredZones] = useState<SerializedZone[]>(zones);
 
+  // Filter zones when search text changes
   useEffect(() => {
-    if (searchText.length >= 2) {
+    if (searchText) {
       const filtered = zones.filter((zone) =>
         zone.displayString.toLowerCase().includes(searchText.toLowerCase())
       );
       setFilteredZones(filtered);
-      setShowDropdown(true);
     } else {
-      setFilteredZones([]);
-      setShowDropdown(false);
+      setFilteredZones(zones);
     }
   }, [searchText, zones]);
 
@@ -66,12 +69,6 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
     if (searchParams.priceRange) params.set("priceRange", searchParams.priceRange);
 
     router.push(`/properties?${params.toString()}`);
-  };
-
-  const selectZone = (zone: SerializedZone) => {
-    setSearchText(zone.displayString);
-    setSearchParams((prev) => ({ ...prev, location: zone.id.toString() }));
-    setShowDropdown(false);
   };
 
   return (
@@ -141,46 +138,64 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
             </SelectContent>
           </Select>
         </div>
-        <div className="relative flex  w-full md:w-[80%]">
-          <MapPin className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Ubicación"
-            className="w-full pl-10 pr-4 py-2 border-[2px] rounded-md bg-white/90 dark:bg-gray-800/50 text-foreground"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onFocus={() => {
-              if (searchText.length >= 2) {
-                setShowDropdown(true);
-              }
-            }}
-            onBlur={() => {
-              // Delay hiding dropdown to allow for click on items
-              setTimeout(() => setShowDropdown(false), 200);
-            }}
-          />
+        
+        {/* Searchable Location Select */}
+        <div className="relative flex w-full md:w-[70%]">
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button 
+                variant="outline" 
+                role="combobox" 
+                aria-expanded={open}
+                className="w-full justify-between pl-10 pr-4 py-2 h-10 border-[2px] rounded-md bg-white/90 dark:bg-gray-800/50 text-left font-normal"
+                onClick={() => setOpen(true)}
+              >
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                {searchParams.location ? 
+                  zones.find(zone => zone.id.toString() === searchParams.location)?.displayString : 
+                  "Ubicación"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0" align="start" sideOffset={5}>
+              <Command>
+                <CommandInput 
+                  placeholder="Buscar ubicación..." 
+                  value={searchText}
+                  onValueChange={setSearchText}
+                  className="h-9 text-base"
+                  autoFocus
+                />
+                <CommandList className="max-h-[300px] overflow-auto">
+                  <CommandEmpty>No se encontraron resultados.</CommandEmpty>
+                  <CommandGroup>
+                    {filteredZones.map((zone) => (
+                      <CommandItem
+                        key={zone.id}
+                        value={zone.displayString}
+                        className="cursor-pointer py-2"
+                        onSelect={() => {
+                          setSearchParams(prev => ({ ...prev, location: zone.id.toString() }));
+                          setSearchText(zone.displayString); // Set the search text to selected value
+                          setOpen(false);
+                        }}
+                      >
+                        {zone.displayString}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+          
           <Button
             className="absolute border-0 rounded-l-none right-0 max-w-2xl md:mt-0"
             size="lg"
             onClick={handleSearch}
           >
             <Search className="mr-2 h-5 w-5" />
+            Buscar Propiedad
           </Button>
-
-          {/* Dropdown for filtered zones */}
-          {showDropdown && filteredZones.length > 0 && (
-            <div className="absolute z-20 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-auto">
-              {filteredZones.map((zone) => (
-                <div
-                  key={zone.id}
-                  className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer text-left text-foreground"
-                  onClick={() => selectZone(zone)}
-                >
-                  {zone.displayString}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </div>
