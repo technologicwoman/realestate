@@ -3,7 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Building2, Search, MapPin, DollarSign } from "lucide-react";
+import { Building2, Search, MapPin } from "lucide-react";
+import { 
+  Select, 
+  SelectContent, 
+  SelectGroup, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 
 // Define a simpler interface for the serialized zones
 interface SerializedZone {
@@ -52,7 +60,9 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
 
     if (searchParams.type) params.set("type", searchParams.type);
     if (searchParams.location) params.set("location", searchParams.location);
-    if (searchParams.propertyType) params.set("propertyType", searchParams.propertyType);
+    if (searchParams.propertyType && searchParams.propertyType !== "all") {
+      params.set("propertyType", searchParams.propertyType);
+    }
     if (searchParams.priceRange) params.set("priceRange", searchParams.priceRange);
 
     router.push(`/properties?${params.toString()}`);
@@ -108,22 +118,30 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
 
       {/* Search Filters */}
       <div className="flex flex-col md:flex-row gap-4 items-center">
-        <div className="relative">
-          <Building2 className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-          <select
-            className="pl-10 px-4 py-2 border-[2px] rounded-md bg-white/90 dark:bg-gray-800/50 text-muted-foreground scroll-y"
+        <div className="relative flex w-full md:w-[30%]">
+          <Select
             value={searchParams.propertyType}
-            onChange={(e) => setSearchParams(prev => ({ ...prev, propertyType: e.target.value }))}
+            onValueChange={(value) => 
+              setSearchParams(prev => ({ ...prev, propertyType: value }))
+            }
           >
-            <option value="">Tipo de Propiedad</option>
-            {propertyTypes.map((type) => (
-              <option key={type.id} value={type.id}>
-                {type.displayName}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger className="w-full pl-10 border-[2px] bg-white/90 dark:bg-gray-800/50 text-muted-foreground">
+              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <SelectValue placeholder="Tipo de Propiedad" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="all">Todos los tipos</SelectItem>
+                {propertyTypes.map((type) => (
+                  <SelectItem key={type.id} value={type.id.toString()}>
+                    {type.displayName}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="relative flex-1">
+        <div className="relative flex  w-full md:w-[80%]">
           <MapPin className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <input
             type="text"
@@ -164,22 +182,6 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
             </div>
           )}
         </div>
-        
-       
-        {/* <div className="relative">
-          <DollarSign className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-          <select 
-            className="w-full pl-10 pr-4 py-2 border rounded-md bg-white/50 dark:bg-gray-800/50 text-muted-foreground"
-            value={searchParams.priceRange}
-            onChange={(e) => setSearchParams(prev => ({ ...prev, priceRange: e.target.value }))}
-          >
-            <option value="">Price Range</option>
-            <option value="0-200000">$0 - $200,000</option>
-            <option value="200000-500000">$200,000 - $500,000</option>
-            <option value="500000-1000000">$500,000 - $1,000,000</option>
-            <option value="1000000+">$1,000,000+</option>
-          </select>
-        </div> */}
       </div>
     </div>
   );
