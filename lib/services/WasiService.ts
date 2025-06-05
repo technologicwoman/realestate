@@ -273,7 +273,6 @@ export class WasiService {
           wasi_token: this.token
         })
       });
-      console.log("Property Types Response:", response);
       const statusKey = 'status';
       const totalKey = 'total';
       delete response[statusKey as keyof typeof response];

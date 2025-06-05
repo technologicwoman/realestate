@@ -11,8 +11,9 @@ import HeroBg from "@/app/assets/images/HeroBg.png";
 // Create a client component for the slider
 import PropertiesSlider from "@/components/properties/properties-slider";
 
-export default async function ZonePage({ params }: { params: { id: string } }) {
-  const zoneId = parseInt(params.id);
+export default async function ZonePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const zoneId = parseInt(id);
   
   if (isNaN(zoneId)) {
     return notFound();
