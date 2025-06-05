@@ -147,7 +147,7 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
                 variant="outline" 
                 role="combobox" 
                 aria-expanded={open}
-                className="w-full justify-between pl-10 pr-4 py-2 h-10 border-[2px] rounded-md bg-white/90 dark:bg-gray-800/50 text-left font-normal"
+                className="w-full justify-between pl-10 pr-4 py-2 h-10 border-[2px] rounded-md bg-white/90 dark:bg-gray-800/50 text-black text-left font-normal"
                 onClick={() => setOpen(true)}
               >
                 <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />

@@ -1,5 +1,6 @@
 import { ICity, ILocation, IProperty, IRegion, IZone, IPropertyType } from "../domain/interfaces";
 import { PropertyViewModel, PropertyMapper, PropertyTypeMapper, PropertyTypeViewModel, ZoneViewModel, ZoneMapper, LocationViewModel, LocationMapper, CityViewModel, CityMapper } from "../domain/models";
+import { OutstandingZones } from '../static/config/ZonesConfig';
 import { fetchWithErrorHandling } from "./common";
 
 
@@ -95,6 +96,37 @@ export class WasiService {
 
       return zones;
     }
+
+    // Update the getOutstandingZones method to avoid circular dependencies
+    getOutstandingZones(allZones: ZoneViewModel[]): ZoneViewModel[] {
+      // Get the outstanding zones IDs
+      const outstandingZonesIds = OutstandingZones.map(zone => zone.id);
+      
+      // Filter zones that match the outstanding zone IDs
+      const outstandingZones = allZones.filter(zone => 
+        outstandingZonesIds.includes(zone.id)
+      );
+      
+      // Enrich the zones with the description from the config
+      return outstandingZones.map(zone => {
+        const configZone = OutstandingZones.find(oz => oz.id === zone.id);
+        // Create a new instance to avoid modifying the original zone
+        return new ZoneViewModel(
+          zone.id,
+          zone.name,
+          zone.city_id,
+          zone.city_name,
+          zone.location_id,
+          zone.location_name,
+          zone.owner,
+          zone.country_id,
+          zone.country_name,
+          true, // outstanding
+          configZone?.description || '', // description
+          configZone?.imageUrl || ''
+        );
+      });
+  }
   
     async getOutstandingProperties(): Promise<PropertyViewModel[]> {
       const url = `${this.baseUrl}/property/search?short=true&id_status_on_page=3&take=6&order_by=created_at&id_user=30262`;

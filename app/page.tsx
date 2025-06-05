@@ -7,10 +7,10 @@ import { HeroSearch } from "@/components/properties/hero-search";
 
 import { WasiService } from "../lib/services";
 import { PropertyViewModel, PropertyTypeViewModel } from "../lib/domain/models";
+import { OutstandingZones } from "../lib/static/config/ZonesConfig";
 
 import WaterMark from "@/app/assets/images/WaterMark.png";
 import HeroBg from "@/app/assets/images/HeroBg.png";
-
 
 export default async function Home() {
   // This is the main page of the application
@@ -29,6 +29,9 @@ export default async function Home() {
 
   // Fetch all zones for the search
   let zones = await wasiService.getAllZones();
+
+  // Get outstanding zones for the search
+  const outstandingZones = wasiService.getOutstandingZones(zones);
 
   // Fetch property types
   let propertyTypes: PropertyTypeViewModel[] = [];
@@ -69,6 +72,41 @@ export default async function Home() {
           </p>
   
           <HeroSearch zones={serializedZones} propertyTypes={serializedPropertyTypes} />
+        </div>
+      </section>
+
+      {/* Outstanding Zones Section */}
+      <section className="relative py-16 bg-muted">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Zonas Destacadas</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {outstandingZones.map((zone) => (
+              <Link 
+                key={zone.id} 
+                href={`/zones/${zone.id}`} 
+                className="relative block h-[250px] overflow-hidden group hover:shadow-xl transition-all duration-300"
+              >
+                {/* Zone image background */}
+                <div className="absolute inset-0">
+                  <Image 
+                    src={zone.imageUrl || "/assets/zones/placeholder.png"}
+                    alt={zone.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                
+                {/* Dark overlay for better text readability */}
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300"></div>
+                
+                {/* Zone name overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-2xl font-bold mb-2">{zone.name}</h3>
+                  <p className="text-sm opacity-90">{zone.city_name}, {zone.country_name}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

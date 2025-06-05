@@ -13,6 +13,8 @@ export class ZoneViewModel {
     country_id: number;
     country_name: string;
     outstanding?: boolean;
+    description?: string;
+    imageUrl?: string;
     
     constructor(
         id: number,
@@ -24,7 +26,10 @@ export class ZoneViewModel {
         owner: string,
         country_id: number,
         country_name: string,
-        outstanding?: boolean
+        outstanding?: boolean,
+        description?: string,
+        imageUrl?: string 
+
     ) {
         this.id = id;
         this.name = name;
@@ -36,6 +41,8 @@ export class ZoneViewModel {
         this.country_id = country_id;
         this.country_name = country_name;
         this.outstanding = outstanding;
+        this.description = description; // Initialize description
+        this.imageUrl = imageUrl;
     }
     
     getString(): string {
@@ -60,6 +67,8 @@ export class ZoneViewModel {
             country_id: this.country_id,
             country_name: this.country_name,
             outstanding: this.outstanding,
+            description: this.description,
+            imageUrl: this.imageUrl,
             displayString: this.getString() // Include the result of the getString function
         };
     }
