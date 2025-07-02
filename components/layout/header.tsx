@@ -76,7 +76,7 @@ export function Header() {
             <Link href="/" className="flex items-center space-x-2">
               <Image
                 src={LogoBlackYellow}
-                alt="BB Real Estate Logo"
+                alt="B&B Real Estate Logo"
                 style={{ objectFit: "contain" }}
                 className="w-25 md:w-30"
               />
@@ -104,7 +104,6 @@ export function Header() {
           
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
-            <ModeToggle />
             <Button
               variant="ghost"
               size="icon"
@@ -142,10 +141,6 @@ export function Header() {
                   {item.title}
                 </Link>
               ))}
-              <Button variant="outline" size="sm" className="mt-2 gap-2 justify-start">
-                <Search className="h-4 w-4" />
-                Search Properties
-              </Button>
             </nav>
           </div>
         </div>

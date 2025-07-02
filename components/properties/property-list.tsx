@@ -34,8 +34,8 @@ export function PropertyList({ properties, currentPage, totalPages, searchParams
     <div>
       {properties.length === 0 ? (
         <div className="text-center py-12">
-          <h3 className="text-xl font-medium">No properties found</h3>
-          <p className="text-muted-foreground mt-2">Try adjusting your search filters</p>
+          <h3 className="text-xl font-medium">No propiedades encontradas.</h3>
+          <p className="text-muted-foreground mt-2">Intenta con otros criterios de búsqueda.</p>
         </div>
       ) : (
         <>
@@ -49,7 +49,7 @@ export function PropertyList({ properties, currentPage, totalPages, searchParams
                   id: property.id.toString(),
                   title: property.title,
                   location: property.location,
-                  price: property.price,
+                  priceLabel: property.priceLabel,
                   features: {
                     bedrooms: property.bedrooms,
                     bathrooms: property.bathrooms,

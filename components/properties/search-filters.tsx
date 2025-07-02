@@ -13,27 +13,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { MapPin } from "lucide-react";
 import Image from "next/image";
 import WaterMark from "@/app/assets/images/WaterMark.png";
-import { PropertyType } from "@/lib/types";
+import { PropertyTypeViewModel } from "@/lib/domain/models";
 
 export function SearchFilters({
-  zones,
+  zones, propertyTypes
 }: {
-  zones: { id: number; displayString: string }[];
-}) {
+  zones: { id: number; displayString: string }[], propertyTypes: PropertyTypeViewModel[];
+}) {    
   const router = useRouter();
   const searchParams = useSearchParams();
   
   const [filters, setFilters] = useState({
-    type: searchParams.get("type") || "all",
+    transactionType: searchParams.get("type") || "all",
+    location: searchParams.get("location") || "",
+    propertyType: searchParams.get("propertyType") || "all",
     minPrice: searchParams.get("minPrice") || "0",
     maxPrice: searchParams.get("maxPrice") || "2000000",
     bedrooms: searchParams.get("bedrooms") || "all",
     bathrooms: searchParams.get("bathrooms") || "all",
-    minArea: searchParams.get("minArea") || "0",
-    maxArea: searchParams.get("maxArea") || "1000",
   });
+
+  const [open, setOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [filteredZones, setFilteredZones] = useState(zones);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -58,36 +65,108 @@ export function SearchFilters({
         className="object-cover -z-10"
         />
       <div className="space-y-2">
-        <Label>Property Type</Label>
         <Select
-          value={filters.type}
-          onValueChange={(value) => handleFilterChange("type", value)}
+          value={filters.transactionType}
+          onValueChange={(value) => handleFilterChange("transactionType", value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Select type" />
+            <SelectValue placeholder="Categoría" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            <SelectItem value="apartment">Apartment</SelectItem>
-            <SelectItem value="house">House</SelectItem>
-            <SelectItem value="villa">Villa</SelectItem>
-            <SelectItem value="office">Office</SelectItem>
+          {["rent", "buy", "project"].map((type) => ( // CHANGE for constant sell, buy or project
+            <SelectItem key={type} value={type}>
+              {type === "rent" ? "Alquilar" : type === "buy" ? "Comprar" : "Proyecto"}
+            </SelectItem>
+          ))}
           </SelectContent>
         </Select>
       </div>
 
       <div className="space-y-2">
-        <Label>Price Range</Label>
+        <Label>Ubicación</Label>
+        <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button 
+                variant="outline" 
+                role="combobox" 
+                aria-expanded={open}
+                className="w-full justify-between pr-4 py-2 h-10 border-[2px] rounded-md bg-white/90 dark:bg-gray-800/50 text-black text-left font-normal"
+                onClick={() => setOpen(true)}
+              >
+                <span className="truncate">
+                  {filters.location ? 
+                    zones.find(zone => zone.id.toString() === filters.location)?.displayString : 
+                    "Ubicación"}
+                </span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0" align="start" sideOffset={5}>
+              <Command>
+                <CommandInput 
+                  placeholder="Buscar ubicación..." 
+                  value={searchText}
+                  onValueChange={setSearchText}
+                  className="h-9 text-base"
+                  autoFocus
+                />
+                <CommandList className="max-h-[300px] overflow-auto">
+                  <CommandEmpty>No se encontraron resultados.</CommandEmpty>
+                  <CommandGroup>
+                    {filteredZones.map((zone) => (
+                      <CommandItem
+                        key={zone.id}
+                        value={zone.displayString}
+                        className="cursor-pointer py-2"
+                        onSelect={() => {
+                          setFilters(prev => ({ ...prev, location: zone.id.toString() }));
+                          setSearchText(zone.displayString);
+                          setOpen(false);
+                        }}
+                      >
+                        <div className="w-full break-words">
+                          {zone.displayString}
+                        </div>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Tipo de Propiedad</Label>
+        <Select
+          value={filters.propertyType}
+          onValueChange={(value) => handleFilterChange("propertyType", value)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Tipo de Propiedad" />
+          </SelectTrigger>
+          <SelectContent>
+          {propertyTypes.map((type) => (
+            <SelectItem key={type.id} value={type.id.toString()}>
+              {type.displayName}
+            </SelectItem>
+          ))}
+            <SelectItem value="all">Todas</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label>Rango de Precio</Label>
         <div className="grid grid-cols-2 gap-4">
           <Input
             type="number"
-            placeholder="Min Price"
+            placeholder="Precio Mínimo"
             value={filters.minPrice}
             onChange={(e) => handleFilterChange("minPrice", e.target.value)}
           />
           <Input
             type="number"
-            placeholder="Max Price"
+            placeholder="Precio Máximo"
             value={filters.maxPrice}
             onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
           />
@@ -95,65 +174,57 @@ export function SearchFilters({
       </div>
 
       <div className="space-y-2">
-        <Label>Bedrooms</Label>
-        <Select
-          value={filters.bedrooms}
-          onValueChange={(value) => handleFilterChange("bedrooms", value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Any" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Any</SelectItem>
-            {[1, 2, 3, 4, 5].map((num) => (
-              <SelectItem key={num} value={num.toString()}>
-                {num}+ Beds
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Label>Recámaras</Label>
+        <div className="flex rounded-lg overflow-hidden border border-input">
+          <Button
+            type="button"
+            variant={filters.bedrooms === "all" ? "default" : "ghost"}
+            className={`rounded-none h-10 flex-1 ${filters.bedrooms === "all" ? "" : "bg-background hover:bg-muted text-foreground"}`}
+            onClick={() => handleFilterChange("bedrooms", "all")}
+          >
+            Todos
+          </Button>
+          {[1, 2, 3, 4, 5, 6].map((num) => (
+            <Button
+              key={num}
+              type="button"
+              variant={filters.bedrooms === num.toString() ? "default" : "ghost"}
+              className={`rounded-none h-10 flex-1 ${filters.bedrooms === num.toString() ? "" : "bg-background hover:bg-muted text-foreground"}`}
+              onClick={() => handleFilterChange("bedrooms", num.toString())}
+            >
+              {num}
+            </Button>
+          ))}
+        </div>
       </div>
 
       <div className="space-y-2">
-        <Label>Bathrooms</Label>
-        <Select
-          value={filters.bathrooms}
-          onValueChange={(value) => handleFilterChange("bathrooms", value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Any" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Any</SelectItem>
-            {[1, 2, 3, 4].map((num) => (
-              <SelectItem key={num} value={num.toString()}>
-                {num}+ Baths
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label>Area (m²)</Label>
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            type="number"
-            placeholder="Min Area"
-            value={filters.minArea}
-            onChange={(e) => handleFilterChange("minArea", e.target.value)}
-          />
-          <Input
-            type="number"
-            placeholder="Max Area"
-            value={filters.maxArea}
-            onChange={(e) => handleFilterChange("maxArea", e.target.value)}
-          />
+        <Label>Baños</Label>
+        <div className="flex rounded-lg overflow-hidden border border-input">
+          <Button
+            type="button"
+            variant={filters.bathrooms === "all" ? "default" : "ghost"}
+            className={`rounded-none h-10 flex-1 ${filters.bathrooms === "all" ? "" : "bg-background hover:bg-muted text-foreground"}`}
+            onClick={() => handleFilterChange("bathrooms", "all")}
+          >
+            Todos
+          </Button>
+          {[1, 2, 3, 4, 5, 6].map((num) => (
+            <Button
+              key={num}
+              type="button"
+              variant={filters.bathrooms === num.toString() ? "default" : "ghost"}
+              className={`rounded-none h-10 flex-1 ${filters.bathrooms === num.toString() ? "" : "bg-background hover:bg-muted text-foreground"}`}
+              onClick={() => handleFilterChange("bathrooms", num.toString())}
+            >
+              {num}
+            </Button>
+          ))}
         </div>
       </div>
 
       <Button className="w-full" onClick={applyFilters}>
-        Apply Filters
+        Aplicar Filtros
       </Button>
     </div>
   );

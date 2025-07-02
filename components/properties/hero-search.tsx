@@ -37,7 +37,7 @@ interface HeroSearchProps {
 export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
   const router = useRouter();
   const [searchParams, setSearchParams] = useState({
-    type: "buy",
+    type: "buy",  
     location: "",
     propertyType: "",
     priceRange: ""

@@ -9,7 +9,8 @@ interface PropertyCardProps {
     id: string;
     title: string;
     location: string;
-    price: number;
+    price?: number;
+    priceLabel: string;
     features: {
       bedrooms: number;
       bathrooms: number;
@@ -53,7 +54,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
 
         <div className="flex justify-between items-center mt-auto">
           <span className="text-lg font-bold">
-            ${property.price.toLocaleString()}
+            {property.priceLabel}
           </span>
           <Button variant="outline" asChild>
             <Link href={`/properties/${property.id}`}>Ver Detalles</Link>

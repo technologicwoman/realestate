@@ -10,6 +10,8 @@ import { ContactForm } from "@/components/properties/contact-form";
 import { WasiService } from "@/lib/services";
 import { PropertyViewModel } from "@/lib/domain/models";
 
+import WaterMarkYellow from "@/app/assets/images/WaterMarkYellow.png";
+
 
 export default async function PropertyDetail({ params }: { params: Promise<{ id: string }>  }) {
   // This would typically come from a database
@@ -47,7 +49,7 @@ export default async function PropertyDetail({ params }: { params: Promise<{ id:
   let agentInfo = { 
     name: property.agency,
     role: "Real Estate",
-    image: property.agencyLogo || "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg"
+    image: WaterMarkYellow
   };
 
 

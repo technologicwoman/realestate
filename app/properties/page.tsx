@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { PropertyList } from "@/components/properties/property-list";
 import { SearchFilters } from "@/components/properties/search-filters";
 import { WasiService } from "@/lib/services";
-import { PropertyViewModel } from "@/lib/domain/models";
+import { PropertyTypeViewModel, PropertyViewModel } from "@/lib/domain/models";
 
 // Items per page for pagination
 const ITEMS_PER_PAGE = 9;
@@ -18,7 +18,9 @@ export default async function PropertiesPage({
   // Extract pagination from URL params or use defaults
   const currentPage = params.page ? Number(params.page) : 1;
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
-  
+
+  // If no
+
   // Create WasiService instance for server-side operations
   const WASI_BASE_URL = process.env.WASI_BASE_URL || 'https://api.wasi.co/v1';
   const WASI_CLIENT_ID = process.env.WASI_CLIENT_ID || '';
@@ -28,10 +30,22 @@ export default async function PropertiesPage({
   // We'll fetch zones for filters
   const zones = await wasiService.getAllZones();
   
+  // Fetch property types for filters
+  let propertyTypes: PropertyTypeViewModel[]  = [];
+  propertyTypes = await wasiService.getPropertyTypes();
+  
+  
   // Convert zone classes to plain objects for client component
   const serializedZones = zones.map(zone => ({
     id: zone.id,
     displayString: zone.getString(),
+  }));
+
+  // Convert property types to plain objects for client component
+  const serializedPropertyTypes = propertyTypes.map(type => ({
+    id: type.id,
+    name: type.name,
+    displayName: type.displayName
   }));
 
   // Create filter params with pagination
@@ -64,7 +78,7 @@ export default async function PropertiesPage({
       <h1 className="text-3xl font-bold mb-8">Búsqueda Avanzada</h1>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-1">
-          <SearchFilters zones={serializedZones} />
+          <SearchFilters zones={serializedZones} propertyTypes={serializedPropertyTypes} />
         </div>
         
         <div className="lg:col-span-3">
