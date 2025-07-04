@@ -57,7 +57,7 @@ export default function PropertiesSlider({ properties }: PropertiesSliderProps) 
                     id: property.id.toString(),
                     title: property.title,
                     location: property.location,
-                    price: parseInt(property.priceLabel.replace(/[^0-9]/g, '')) || 0,
+                    priceLabel: property.priceLabel,
                     features: {
                       bedrooms: property.bedrooms,
                       bathrooms: property.bathrooms,

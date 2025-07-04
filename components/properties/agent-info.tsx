@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail } from "lucide-react";
 
 interface AgentInfoProps {
   name: string;
   role: string;
-  image: string;
+  image: StaticImageData | string;
 }
 
 export function AgentInfo({ name, role, image }: AgentInfoProps) {
