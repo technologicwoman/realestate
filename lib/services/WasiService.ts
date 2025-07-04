@@ -213,10 +213,10 @@ export class WasiService {
       let filters = {
         ...params
       };
-      if (params.type) {
-        filters.for_rent = params.type === 'rent' ? 'true' : 'false';
-        filters.for_sale = params.type === 'buy' ? 'true' : 'false';
-        if (params.type === 'project') {
+      if (params.transactionType) {
+        filters.for_rent = params.transactionType === 'rent' ? 'true' : 'false';
+        filters.for_sale = params.transactionType === 'buy' ? 'true' : 'false';
+        if (params.transactionType === 'project') {
           filters.id_property_condition = 3 // project
         }
       }

@@ -28,22 +28,18 @@ const navItems: NavItem[] = [
   },
   {
     title: "Comprar",
-    href: "/properties?type=buy",
+    href: "/properties?transactionType=buy",
     icon: <Building2 className="h-4 w-4" />,
   },
   {
     title: "Alquilar",
-    href: "/properties?type=rent",
+    href: "/properties?transactionType=rent",
     icon: <Building className="h-4 w-4" />,
   },
   {
     title: "Nosotros",
-    href: "/about",
-  },
-  {
-    title: "Contacto",
-    href: "/contact",
-  },
+    href: "#about-us",
+  }
 ];
 
 export function Header() {
@@ -76,7 +72,7 @@ export function Header() {
             <Link href="/" className="flex items-center space-x-2">
               <Image
                 src={LogoBlackYellow}
-                alt="BB Real Estate Logo"
+                alt="B&B Real Estate Logo"
                 style={{ objectFit: "contain" }}
                 className="w-25 md:w-30"
               />
@@ -104,7 +100,6 @@ export function Header() {
           
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-4">
-            <ModeToggle />
             <Button
               variant="ghost"
               size="icon"
@@ -142,10 +137,6 @@ export function Header() {
                   {item.title}
                 </Link>
               ))}
-              <Button variant="outline" size="sm" className="mt-2 gap-2 justify-start">
-                <Search className="h-4 w-4" />
-                Search Properties
-              </Button>
             </nav>
           </div>
         </div>

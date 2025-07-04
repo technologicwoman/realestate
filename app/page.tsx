@@ -165,9 +165,9 @@ export default async function Home() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-muted">
+      <section id="about-us" className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Por Qué Elegir BB Real Estate</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Por Qué Elegir B&B Real Estate</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {

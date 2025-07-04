@@ -1,9 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Heart, Share2, ChevronRight, ChevronLeft } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
+import useEmblaCarousel from 'embla-carousel-react';
 
 interface Thumbnail {
   url_original: string;
@@ -17,6 +25,11 @@ interface PropertyGalleryProps {
 export function PropertyGallery({ mainImage, thumbnails }: PropertyGalleryProps) {
   const images = [mainImage, ...thumbnails.map((t) => t.url_original)];
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ 
+    align: 'start',
+    slidesToScroll: 1,
+    containScroll: 'trimSnaps' 
+  });
 
   const prevImage = () => {
     if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
@@ -25,6 +38,12 @@ export function PropertyGallery({ mainImage, thumbnails }: PropertyGalleryProps)
   const nextImage = () => {
     if (currentIndex < images.length - 1) setCurrentIndex(currentIndex + 1);
   };
+
+  // When a thumbnail is selected, also scroll carousel to that position
+  const onThumbnailClick = useCallback((index: number) => {
+    setCurrentIndex(index);
+    emblaApi?.scrollTo(index);
+  }, [emblaApi]);
 
   return (
     <>
@@ -73,23 +92,47 @@ export function PropertyGallery({ mainImage, thumbnails }: PropertyGalleryProps)
         )}
       </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {images.map((img, i) => (
-          <div
-            key={i}
-            className={`relative aspect-video rounded-lg overflow-hidden cursor-pointer ${
-              currentIndex === i ? "ring-4 ring-primary" : ""
-            }`}
-            onClick={() => setCurrentIndex(i)}
-          >
-            <Image
-              src={img}
-              alt={`Gallery image ${i + 1}`}
-              fill
-              className="object-cover hover:opacity-80 transition-opacity"
-            />
+      {/* Thumbnail Slider */}
+      <div className="relative mb-8">
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-4">
+            {images.map((img, i) => (
+              <div
+                key={i}
+                className={`flex-[0_0_calc(25%-12px)] min-w-0 relative aspect-video rounded-lg overflow-hidden cursor-pointer ${
+                  currentIndex === i ? "ring-4 ring-primary" : ""
+                }`}
+                onClick={() => onThumbnailClick(i)}
+              >
+                <Image
+                  src={img}
+                  alt={`Gallery image ${i + 1}`}
+                  fill
+                  className="object-cover hover:opacity-80 transition-opacity"
+                />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+        
+        {/* Thumbnail navigation controls */}
+        <Button 
+          size="icon" 
+          variant="secondary"
+          className="absolute left-1 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/90 hover:bg-white"
+          onClick={() => emblaApi?.scrollPrev()}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        
+        <Button 
+          size="icon" 
+          variant="secondary"
+          className="absolute right-1 top-1/2 -translate-y-1/2 z-10 h-8 w-8 rounded-full bg-white/90 hover:bg-white"
+          onClick={() => emblaApi?.scrollNext()}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
       </div>
     </>
   );
