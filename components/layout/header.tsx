@@ -28,22 +28,18 @@ const navItems: NavItem[] = [
   },
   {
     title: "Comprar",
-    href: "/properties?type=buy",
+    href: "/properties?transactionType=buy",
     icon: <Building2 className="h-4 w-4" />,
   },
   {
     title: "Alquilar",
-    href: "/properties?type=rent",
+    href: "/properties?transactionType=rent",
     icon: <Building className="h-4 w-4" />,
   },
   {
     title: "Nosotros",
-    href: "/about",
-  },
-  {
-    title: "Contacto",
-    href: "/contact",
-  },
+    href: "#about-us",
+  }
 ];
 
 export function Header() {

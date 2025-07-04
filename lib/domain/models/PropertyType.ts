@@ -1,7 +1,7 @@
 import { IPropertyType } from "../interfaces/IPropertyType";
 
 
-export interface PropertyTypeViewModel {
+export interface  PropertyTypeViewModel {
   id: number;
   name: string;
   displayName: string;

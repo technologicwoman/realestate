@@ -37,7 +37,7 @@ interface HeroSearchProps {
 export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
   const router = useRouter();
   const [searchParams, setSearchParams] = useState({
-    type: "buy",  
+    transactionType: "buy",  
     location: "",
     propertyType: "",
     priceRange: ""
@@ -61,7 +61,7 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
   const handleSearch = () => {
     const params = new URLSearchParams();
 
-    if (searchParams.type) params.set("type", searchParams.type);
+    if (searchParams.transactionType) params.set("transactionType", searchParams.transactionType);
     if (searchParams.location) params.set("location", searchParams.location);
     if (searchParams.propertyType && searchParams.propertyType !== "all") {
       params.set("propertyType", searchParams.propertyType);
@@ -77,37 +77,37 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
       <div className="flex flex-col md:flex-row justify-center md:gap-4 mb-6">
         <Button
           size="lg"
-          variant={searchParams.type === "buy" ? "default" : "outline"}
+          variant={searchParams.transactionType === "buy" ? "default" : "outline"}
           className={
-            searchParams.type !== "buy"
+            searchParams.transactionType !== "buy"
               ? "bg-white/90 text-foreground dark:bg-gray-800/50"
               : ""
           }
-          onClick={() => setSearchParams((prev) => ({ ...prev, type: "buy" }))}
+          onClick={() => setSearchParams((prev) => ({ ...prev, transactionType: "buy" }))}
         >
           Venta
         </Button>
         <Button
           size="lg"
-          variant={searchParams.type === "rent" ? "default" : "outline"}
+          variant={searchParams.transactionType === "rent" ? "default" : "outline"}
           className={
-            searchParams.type !== "rent"
+            searchParams.transactionType !== "rent"
               ? "bg-white/90 text-foreground dark:bg-gray-800/50"
               : ""
           }
-          onClick={() => setSearchParams((prev) => ({ ...prev, type: "rent" }))}
+          onClick={() => setSearchParams((prev) => ({ ...prev, transactionType: "rent" }))}
         >
           Alquiler
         </Button>
         <Button
           size="lg"
-          variant={searchParams.type === "project" ? "default" : "outline"}
+          variant={searchParams.transactionType === "project" ? "default" : "outline"}
           className={
-            searchParams.type !== "project"
+            searchParams.transactionType !== "project"
               ? "bg-white/90 text-foreground dark:bg-gray-800/50"
               : ""
           }
-          onClick={() => setSearchParams((prev) => ({ ...prev, type: "project" }))}
+          onClick={() => setSearchParams((prev) => ({ ...prev, transactionType: "project" }))}
         >
           Proyecto
         </Button>
@@ -194,7 +194,7 @@ export function HeroSearch({ zones, propertyTypes }: HeroSearchProps) {
             onClick={handleSearch}
           >
             <Search className="mr-2 h-5 w-5" />
-            Buscar Propiedad
+           <span className="hidden md:inline">Buscar Propiedad</span>
           </Button>
         </div>
       </div>

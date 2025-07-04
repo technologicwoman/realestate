@@ -29,12 +29,12 @@ export function SearchFilters({
   const searchParams = useSearchParams();
   
   const [filters, setFilters] = useState({
-    transactionType: searchParams.get("type") || "all",
+    transactionType: searchParams.get("transactionType") || "all",
     location: searchParams.get("location") || "",
     propertyType: searchParams.get("propertyType") || "all",
-    minPrice: searchParams.get("minPrice") || "0",
-    maxPrice: searchParams.get("maxPrice") || "2000000",
-    bedrooms: searchParams.get("bedrooms") || "all",
+    min_price: searchParams.get("min_price") || "0",
+    max_price: searchParams.get("max_price") || "2000000",
+    min_bedrooms: searchParams.get("min_bedrooms") || "all",
     bathrooms: searchParams.get("bathrooms") || "all",
   });
 
@@ -161,14 +161,14 @@ export function SearchFilters({
           <Input
             type="number"
             placeholder="Precio Mínimo"
-            value={filters.minPrice}
-            onChange={(e) => handleFilterChange("minPrice", e.target.value)}
+            value={filters.min_price}
+            onChange={(e) => handleFilterChange("min_price", e.target.value)}
           />
           <Input
             type="number"
             placeholder="Precio Máximo"
-            value={filters.maxPrice}
-            onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
+            value={filters.max_price}
+            onChange={(e) => handleFilterChange("max_price", e.target.value)}
           />
         </div>
       </div>
@@ -178,9 +178,9 @@ export function SearchFilters({
         <div className="flex rounded-lg overflow-hidden border border-input">
           <Button
             type="button"
-            variant={filters.bedrooms === "all" ? "default" : "ghost"}
-            className={`rounded-none h-10 flex-1 ${filters.bedrooms === "all" ? "" : "bg-background hover:bg-muted text-foreground"}`}
-            onClick={() => handleFilterChange("bedrooms", "all")}
+            variant={filters.min_bedrooms === "all" ? "default" : "ghost"}
+            className={`rounded-none h-10 flex-1 ${filters.min_bedrooms === "all" ? "" : "bg-background hover:bg-muted text-foreground"}`}
+            onClick={() => handleFilterChange("min_bedrooms", "all")}
           >
             Todos
           </Button>
@@ -188,9 +188,9 @@ export function SearchFilters({
             <Button
               key={num}
               type="button"
-              variant={filters.bedrooms === num.toString() ? "default" : "ghost"}
-              className={`rounded-none h-10 flex-1 ${filters.bedrooms === num.toString() ? "" : "bg-background hover:bg-muted text-foreground"}`}
-              onClick={() => handleFilterChange("bedrooms", num.toString())}
+              variant={filters.min_bedrooms === num.toString() ? "default" : "ghost"}
+              className={`rounded-none h-10 flex-1 ${filters.min_bedrooms === num.toString() ? "" : "bg-background hover:bg-muted text-foreground"}`}
+              onClick={() => handleFilterChange("min_bedrooms", num.toString())}
             >
               {num}
             </Button>
