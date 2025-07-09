@@ -34,8 +34,8 @@ export default function PrivacyPolicyPage() {
             <div className="prose prose-lg max-w-none">
               <div className="mb-8 pb-4 border-b">
                 <p className="text-lg leading-relaxed">
-                  En <strong>B&B Real Estate Panamá, S.A.</strong> (en adelante, "la Empresa", "nosotros" o
-                  "nuestro"), valoramos su privacidad y nos comprometemos a proteger los datos
+                  En <strong>B&B Real Estate Panamá, S.A.</strong> (en adelante, &ldquo;la Empresa&rdquo;, &ldquo;nosotros&rdquo; o
+                  &ldquo;nuestro&rdquo;), valoramos su privacidad y nos comprometemos a proteger los datos
                   personales que usted nos proporciona. Esta Política de Privacidad describe cómo
                   recopilamos, utilizamos, almacenamos y compartimos su información cuando visita
                   nuestro sitio web www.bbrealestatepanama.com, o cuando interactúa con nosotros
