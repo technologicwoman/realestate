@@ -128,3 +128,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+html {
+  scroll-behavior:  scroll-smooth;
+}
