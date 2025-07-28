@@ -22,10 +22,16 @@ export interface PropertyViewModel { // TODO: Speficy the type of objects for mu
 export class PropertyMapper {
   static toViewModel(apiProperty: IProperty): PropertyViewModel {
     // Determine the main price (sale or rent)
-    const price = apiProperty.for_sale 
-      ? apiProperty.sale_price 
-      : (apiProperty.for_rent ? apiProperty.rent_price : 0);
-      
+    let price = 0;
+    let priceLabel = '';
+    if (apiProperty.for_sale === 'true') {
+      price = apiProperty.sale_price;
+      priceLabel = apiProperty.sale_price_label;
+    } else {
+      price = apiProperty.rent_price;
+      priceLabel = apiProperty.rent_price_label;
+    }
+
     // Build location string
     const location = [
       apiProperty.zone_label,
@@ -42,7 +48,7 @@ export class PropertyMapper {
       id: apiProperty.id_property,
       title: apiProperty.title,
       price: price,
-      priceLabel: apiProperty.sale_price ? apiProperty.sale_price_label : apiProperty.rent_price_label,
+      priceLabel: priceLabel,
       mainImage: apiProperty.main_image,
       location: location,
       type: apiProperty.id_property_type ? `${apiProperty.id_property_type}` : 'Apartment', // Improve this with proper mapping
