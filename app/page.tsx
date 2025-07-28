@@ -10,7 +10,7 @@ import { PropertyViewModel, PropertyTypeViewModel } from "../lib/domain/models";
 import { OutstandingZones } from "../lib/static/config/ZonesConfig";
 
 import WaterMark from "@/app/assets/images/WaterMark.png";
-import HeroBg from "@/app/assets/images/HeroBg.png";
+import HeroBg from "@/app/assets/images/HeroBg.jpg";
 
 export default async function Home() {
   // This is the main page of the application
@@ -64,11 +64,11 @@ export default async function Home() {
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Encuentra tu hogar soñado en Panamá
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-[0.25rem]">
+            Descubre la propiedad con la que siempre soñaste en Panamá
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-            Descubre propiedades premium en las ubicaciones más buscadas de Panamá
+            Vive en las zonas más exclusivas y encuentra el espacio perfecto para tu estilo de vida.
           </p>
   
           <HeroSearch zones={serializedZones} propertyTypes={serializedPropertyTypes} />

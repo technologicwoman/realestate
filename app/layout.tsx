@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from 'sonner';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { WhatsAppButton } from '@/components/whatsapp-button';
@@ -37,6 +38,7 @@ export default function RootLayout({
             <Footer />
             <WhatsAppButton />
           </div>
+          <Toaster richColors position="top-right" />
         </ThemeProvider>
       </body>
     </html>
