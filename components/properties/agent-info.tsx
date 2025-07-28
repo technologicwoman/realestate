@@ -1,6 +1,5 @@
 import Image, { StaticImageData } from "next/image";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail } from "lucide-react";
 
 interface AgentInfoProps {
   name: string;
@@ -24,17 +23,6 @@ export function AgentInfo({ name, role, image }: AgentInfoProps) {
           <h3 className="font-semibold">{name}</h3>
           <p className="text-sm text-muted-foreground">{role}</p>
         </div>
-      </div>
-      
-      <div className="space-y-4">
-        <Button className="w-full gap-2">
-          <Phone className="h-5 w-5" />
-          Call Agent
-        </Button>
-        <Button variant="outline" className="w-full gap-2">
-          <Mail className="h-5 w-5" />
-          Email Agent
-        </Button>
       </div>
     </>
   );

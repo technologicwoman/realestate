@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 
-import HeroBg from "@/app/assets/images/HeroBg.png";
+import HeroBg from "@/app/assets/images/HeroBg.jpg";
 
 export default function PrivacyPolicyPage() {
   return (

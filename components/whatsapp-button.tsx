@@ -5,31 +5,11 @@ import { FaWhatsapp } from 'react-icons/fa';
 
 export function WhatsAppButton() {
   const whatsappNumber = '50761099881'; // Replace with your WhatsApp number
-  const [isVisible, setIsVisible] = useState(false);
-  
-  // Only show the button after the page has loaded and scrolled a bit
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-    
-    // Initialize visibility
-    handleScroll();
-    
-    // Add event listener
-    window.addEventListener('scroll', handleScroll);
-    
-    // Cleanup
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [isVisible, setIsVisible] = useState(true);
   
   const handleClick = () => {
     window.open(
-      `http://api.whatsapp.com/send/?phone=${whatsappNumber}&text&type=phone_number&app_absent=0`,
+      `https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=&type=phone_number&app_absent=0`,
       '_blank'
     );
   };

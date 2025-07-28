@@ -57,7 +57,7 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link 
-                  href="/properties/buy" 
+                  href="/properties?transactionType=buy" 
                   className="text-muted-foreground hover:text-primary"
                 >
                   Propiedades en Venta
@@ -65,23 +65,16 @@ export function Footer() {
               </li>
               <li>
                 <Link 
-                  href="/properties/rent" 
+                  href="/properties?transactionType=rent" 
                   className="text-muted-foreground hover:text-primary"
                 >
                   Propiedades en Alquiler
                 </Link>
               </li>
+              
               <li>
                 <Link 
-                  href="/agents" 
-                  className="text-muted-foreground hover:text-primary"
-                >
-                  Nuestros Agentes
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  href="/about" 
+                  href="/aboutus" 
                   className="text-muted-foreground hover:text-primary"
                 >
                   Sobre Nosotros
@@ -103,23 +96,23 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link 
-                  href="/locations/panama-city" 
+                  href="/zones/143752" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Ciudad de Panamá
+                  Santa María
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/locations/costa-del-este" 
+                  href="/zones/169075" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Costa del Este
+                  Avenida Balboa
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/locations/punta-pacifica" 
+                  href="/zones/166854" 
                   className="text-muted-foreground hover:text-primary"
                 >
                   Punta Pacífica
@@ -127,15 +120,15 @@ export function Footer() {
               </li>
               <li>
                 <Link 
-                  href="/locations/casco-viejo" 
+                  href="/zones/777349" 
                   className="text-muted-foreground hover:text-primary"
                 >
-                  Casco Viejo
+                  Casco Antiguo
                 </Link>
               </li>
               <li>
                 <Link 
-                  href="/locations/coronado" 
+                  href="/zones/678200" 
                   className="text-muted-foreground hover:text-primary"
                 >
                   Coronado
@@ -150,12 +143,16 @@ export function Footer() {
               <li className="flex items-start space-x-2">
                 <MapPin className="h-5 w-5 text-icon shrink-0" />
                 <span className="text-muted-foreground">
-                  Calle 50, Edificio Plaza 50, Suite 302, Ciudad de Panamá, República de Panamá
+                Oceanía Business Plaza,Isaac Hanono Missri,Torre 1000, Piso 25, Oficina E
+                <br />
+                Lic: PJ-1267-18 
+                <br />
+                PN-5438
                 </span>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="h-5 w-5 text-icon shrink-0" />
-                <span className="text-muted-foreground">+507 123-4567</span>
+                <span className="text-muted-foreground">+507 6109-9881</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="h-5 w-5 text-icon shrink-0" />

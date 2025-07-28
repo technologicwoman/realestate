@@ -125,7 +125,10 @@ export default async function PropertyDetail({ params }: { params: Promise<{ id:
             {/* Schedule Visit */}
             <div className="mt-6">
               <h3 className="font-semibold mb-4">Comunicate con nosotros</h3>
-              <ContactForm />
+              <ContactForm 
+                propertyId={property.id.toString()} 
+                propertyName={property.title} 
+              />
             </div>
           </Card>
         </div>

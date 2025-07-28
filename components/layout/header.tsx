@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
   },
   {
     title: "Nosotros",
-    href: "#about-us",
+    href: "/aboutus",
   }
 ];
 

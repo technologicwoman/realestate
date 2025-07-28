@@ -6,7 +6,8 @@ import { notFound } from "next/navigation";
 
 import { WasiService } from "@/lib/services";
 
-import HeroBg from "@/app/assets/images/HeroBg.png";
+import HeroBg from "@/app/assets/images/HeroBg.jpg";
+import { OutstandingZones } from "@/lib/static/config/ZonesConfig";
 
 // Create a client component for the slider
 import PropertiesSlider from "@/components/properties/properties-slider";
@@ -36,8 +37,11 @@ export default async function ZonePage({ params }: { params: Promise<{ id: strin
   }
 
   // Get the zone information from the OutstandingZones config
-  const outstandingZones = wasiService.getOutstandingZones(zones);
-  const outstandingZone = outstandingZones.find(z => z.id === zoneId);
+  const outstandingWasiZones = wasiService.getOutstandingZones(zones);
+  const outstandingZone = outstandingWasiZones.find(z => z.id === zoneId);
+
+  // Get image for the zone
+  const zoneImage = OutstandingZones.find(z => z.id === zoneId)?.imageUrl || HeroBg;
 
   // Fetch properties in this zone
   const properties = await wasiService.getPropertyByFilters({
@@ -63,7 +67,7 @@ export default async function ZonePage({ params }: { params: Promise<{ id: strin
       {/* Hero Section */}
       <section className="relative h-[50vh] flex items-center justify-center">
         <Image
-          src={HeroBg}
+          src={zoneImage}
           alt={`Propiedades en ${zone.name}`}
           fill
           className="object-cover"
