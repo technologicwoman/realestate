@@ -82,7 +82,7 @@ export default function AboutUsPage() {
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <h3 className="text-xl font-semibold mb-4 text-center">Vende tu propiedad ahora</h3>
                 {/* Add contact form component here */}
-                <Link href="https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=${encodeURIComponent('Hola, quiero vender mi propiedad')}&type=phone_number&app_absent=0" href="http://api.whatsapp.com/send/?phone=50761099881&text=Hola, quiero vender mi propiedad&type=phone_number&app_absent=0" 
+                <Link href="https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=${encodeURIComponent('Hola, quiero vender mi propiedad')}&type=phone_number&app_absent=0" 
                   target="_blank">
                   <Button className="w-full cursor-pointer">
                     Contactar ahora
