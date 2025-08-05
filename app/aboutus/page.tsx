@@ -241,7 +241,7 @@ export default function AboutUsPage() {
               {[
                 {
                   name: "Diana Betancourt",
-                  role: "Directora Comercial (Fundadora)",
+                  role: "Directora Administrativa (Fundadora)",
                   email: "dbetancourt@bbrealestate.com.pa",
                   phone: "+507 6091-1735"
                 },
