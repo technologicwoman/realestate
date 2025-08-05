@@ -44,6 +44,11 @@ export class PropertyMapper {
     delete gallery[IdKey as keyof typeof gallery];
     let features = apiProperty.features ? apiProperty.features : {};
 
+    let area = apiProperty.private_area;
+    if (area === null || area === '') {
+      area = apiProperty.built_area || apiProperty.area || '0' ;
+    }
+
     return {
       id: apiProperty.id_property,
       title: apiProperty.title,
@@ -54,7 +59,7 @@ export class PropertyMapper {
       type: apiProperty.id_property_type ? `${apiProperty.id_property_type}` : 'Apartment', // Improve this with proper mapping
       bedrooms: apiProperty.bedrooms,
       bathrooms: apiProperty.bathrooms,
-      area: parseFloat(apiProperty.area || '0'),
+      area: parseFloat(area), // TODO: Ask for fee
       agency: "B&B Real Estate", // Placeholder for agency name
       gallery: gallery,
       features: features,
