@@ -167,20 +167,23 @@ export default async function Home() {
       {/* Why Choose Us */}
       <section id="about-us" className="py-16 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Por Qué Elegir B&B Real Estate</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">¿Por Qué Elegir B&B Real Estate?</h2>
+          <p className="text-center text-lg mb-8 max-w-2xl mx-auto">
+          Expertos en bienes raíces para inversionistas exigentes
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                title: "Conocimiento Local Experto",
-                description: "Más de 15 años de experiencia en el mercado inmobiliario de Panamá"
+                title: "Trayectoria comprobada en el mercado panameño",
+                description: "Con más de 8 años gestionando compraventas, alquileres y administración de propiedades, conocemos el mercado y sus oportunidades. Pero sobre todo, sabemos cómo maximizar el valor de cada inversión."
               },
               {
-                title: "Propiedades Premium",
-                description: "Selección cuidadosamente curada de las mejores propiedades en Panamá"
+                title: "Propiedades seleccionadas con visión estratégica",
+                description: "Trabajamos con proyectos de alta demanda, rentabilidad comprobada y respaldo legal claro. Cada opción que ofrecemos ha pasado por un proceso riguroso de análisis y curaduría."
               },
               {
-                title: "Servicio Personalizado",
-                description: "Agentes dedicados que ofrecen soluciones adaptadas a tus necesidades"
+                title: "Atención personalizada, con enfoque profesional",
+                description: "Nuestro equipo multidisciplinario brinda un servicio confidencial, cercano y eficaz. No vendemos por vender: construimos relaciones duraderas con quienes valoran invertir con inteligencia."
               }
             ].map((item, i) => (
               <Card key={i} className="text-center p-6">
