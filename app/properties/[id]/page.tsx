@@ -88,7 +88,7 @@ export default async function PropertyDetail({ params }: { params: Promise<{ id:
             </div>
 
             <div>
-              <h2 className="text-2xl font-semibold mb-4">Descripcion</h2>
+              <h2 className="text-2xl font-semibold mb-4">Descripción</h2>
               <div className="prose max-w-hidden" dangerouslySetInnerHTML={{ __html: property.description }}>
             
               </div>

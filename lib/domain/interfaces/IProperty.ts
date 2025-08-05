@@ -41,7 +41,7 @@ interface IProperty {
     built_area: string,
     id_unit_built_area: number,
     unit_built_area_label: string,
-    private_area: number,
+    private_area: string,
     id_unit_private_area:  number,
     unit_private_area_label: string,
     maintenance_fee: number,
