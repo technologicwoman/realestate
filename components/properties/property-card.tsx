@@ -17,6 +17,7 @@ interface PropertyCardProps {
       area: number;
     };
     image: string;
+    slug?: string;
   };
 }
 
@@ -57,7 +58,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
             {property.priceLabel}
           </span>
           <Button variant="outline" asChild>
-            <Link href={`/properties/${property.id}`}>Ver Detalles</Link>
+            <Link href={`/properties/${property.slug}/${property.id}`}>Ver Detalles</Link>
           </Button>
         </div>
       </CardContent>

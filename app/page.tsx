@@ -149,7 +149,7 @@ export default async function Home() {
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-bold">{feauredProperty.priceLabel}</span>
                     <Button variant="outline" asChild>
-                      <Link href={`/properties/${feauredProperty.id}?title=${feauredProperty.title}`}>Ver Detalles</Link>
+                      <Link href={`/properties/${feauredProperty.slug}/${feauredProperty.id}`}>Ver Detalles</Link>
                     </Button>
                   </div>
                 </CardContent>

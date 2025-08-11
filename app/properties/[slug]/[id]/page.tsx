@@ -13,7 +13,7 @@ import { PropertyViewModel } from "@/lib/domain/models";
 import WaterMarkYellow from "@/app/assets/images/WaterMarkYellow.png";
 
 
-export default async function PropertyDetail({ params }: { params: Promise<{ id: string }>  }) {
+export default async function PropertyDetail({ params }: { params: Promise<{ slug: string, id: string }>  }) {
   // This would typically come from a database
   // Get property ID from route params
   const { id } = await params;
