@@ -59,7 +59,8 @@ export default async function ZonePage({ params }: { params: Promise<{ id: strin
     priceLabel: prop.priceLabel,
     mainImage: {
       url: prop.mainImage.url
-    }
+    },
+    slug: prop.slug || ''
   }));
 
   return (

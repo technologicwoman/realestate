@@ -18,6 +18,7 @@ type Property = {
   mainImage: {
     url: string;
   };
+  slug?: string; // Optional slug for routing
 };
 
 type PropertiesSliderProps = {
@@ -63,7 +64,8 @@ export default function PropertiesSlider({ properties }: PropertiesSliderProps) 
                       bathrooms: property.bathrooms,
                       area: property.area,
                     },
-                    image: property.mainImage.url
+                    image: property.mainImage.url,
+                    slug: property.slug || ''
                   }}
                 />
               </div>

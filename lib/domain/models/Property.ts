@@ -1,4 +1,5 @@
 import { IProperty, IMainImage } from "../interfaces/IProperty";
+import { PropertyTypes } from "../../static/config/PropertyConfig";
 
 export interface PropertyViewModel { // TODO: Speficy the type of objects for multiple CSM services 
   id: number;
@@ -17,19 +18,23 @@ export interface PropertyViewModel { // TODO: Speficy the type of objects for mu
   features: object;   
   garages: number;
   description: string; 
+  slug?: string; // Optional slug for routing
 }
 
 export class PropertyMapper {
   static toViewModel(apiProperty: IProperty): PropertyViewModel {
-    // Determine the main price (sale or rent)
+    // Determine the main price (sale or rent) and business type
     let price = 0;
     let priceLabel = '';
+    let businessType = '';
     if (apiProperty.for_sale === 'true') {
       price = apiProperty.sale_price;
       priceLabel = apiProperty.sale_price_label;
+      businessType = 'venta';
     } else {
       price = apiProperty.rent_price;
       priceLabel = apiProperty.rent_price_label;
+      businessType = 'alquiler';
     }
 
     // Build location string
@@ -49,6 +54,9 @@ export class PropertyMapper {
       area = apiProperty.built_area || apiProperty.area || '0' ;
     }
 
+    // property type
+    let propertyType = PropertyTypes[apiProperty.id_property_type] || 'Apartamento';
+    
     return {
       id: apiProperty.id_property,
       title: apiProperty.title,
@@ -56,15 +64,16 @@ export class PropertyMapper {
       priceLabel: priceLabel,
       mainImage: apiProperty.main_image,
       location: location,
-      type: apiProperty.id_property_type ? `${apiProperty.id_property_type}` : 'Apartment', // Improve this with proper mapping
+      type: propertyType,
       bedrooms: apiProperty.bedrooms,
       bathrooms: apiProperty.bathrooms,
-      area: parseFloat(area), // TODO: Ask for fee
-      agency: "B&B Real Estate", // Placeholder for agency name
+      area: parseFloat(area),
+      agency: "B&B Real Estate",
       gallery: gallery,
       features: features,
       garages: apiProperty.garages,
       description: apiProperty.observations,
+      slug: `${propertyType.toLowerCase()}-${businessType}-${apiProperty.zone_label || apiProperty.location_label}-${apiProperty.city_label || apiProperty.country_label}`.replace(/\s+/g, '-').toLowerCase() || ''
     };
   }
 

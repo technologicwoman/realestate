@@ -55,7 +55,8 @@ export function PropertyList({ properties, currentPage, totalPages, searchParams
                     bathrooms: property.bathrooms,
                     area: property.area,
                   },
-                  image: property.mainImage.url
+                  image: property.mainImage.url,
+                  slug: property.slug
                 }} 
               />
             ))}
