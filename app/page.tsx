@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, Search, MapPin, DollarSign } from "lucide-react";
 import { HeroSearch } from "@/components/properties/hero-search";
+import { PropertyCard } from "@/components/properties/property-card";
 
 import { WasiService } from "../lib/services";
 import { PropertyViewModel, PropertyTypeViewModel } from "../lib/domain/models";
@@ -128,32 +129,22 @@ export default async function Home() {
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProperties.map((feauredProperty) => (
-              <Card key={feauredProperty.id} className="overflow-hidden">
-                <div className="relative h-64">
-                  <Image
-                    src={feauredProperty.mainImage.url}
-                    alt={`Propiedad Destacada ${feauredProperty.title}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{feauredProperty.title}</h3>
-                  <MapPin className="h-5 w-5 text-icon" />
-                  <span className="text-sm text-muted-foreground">
-                    {feauredProperty.location}
-                  </span>
-                  <p className="text-muted-foreground mb-4">
-                    {feauredProperty.bathrooms} Baños • {feauredProperty.bedrooms} Hab • {feauredProperty.area}m² 
-                  </p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold">{feauredProperty.priceLabel}</span>
-                    <Button variant="outline" asChild>
-                      <Link href={`/properties/${feauredProperty.slug}/${feauredProperty.id}`}>Ver Detalles</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+               <PropertyCard 
+                  key={feauredProperty.id} 
+                  property={{
+                    id: feauredProperty.id.toString(),
+                    title: feauredProperty.title,
+                    location: feauredProperty.location,
+                    priceLabel: feauredProperty.priceLabel,
+                    features: {
+                      bedrooms: feauredProperty.bedrooms,
+                      bathrooms: feauredProperty.bathrooms,
+                      area: feauredProperty.area,
+                    },
+                    image: feauredProperty.mainImage.url,
+                    slug: feauredProperty.slug || ''
+                  }}
+                />
             ))}
           </div>
           <div className="text-center mt-12">

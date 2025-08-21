@@ -15,6 +15,7 @@ import LogoBlackYellow from "@/app/assets/images/LogoBlackYellow.png";
 
 
 type NavItem = {
+  id: string;
   title: string;
   href: string;
   icon?: React.ReactNode;
@@ -22,21 +23,31 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
+    id: 'home',
     title: "Inicio",
     href: "/",
     icon: <Home className="h-4 w-4" />,
   },
   {
+    id: 'buy',
     title: "Comprar",
     href: "/properties?transactionType=buy",
     icon: <Building2 className="h-4 w-4" />,
   },
   {
+    id: 'rent',
     title: "Alquilar",
     href: "/properties?transactionType=rent",
     icon: <Building className="h-4 w-4" />,
   },
   {
+    id: 'project',
+    title: "Proyectos",
+    href: "/properties?transactionType=project",
+    icon: <Building className="h-4 w-4" />,
+  },
+  {
+    id: 'about',
     title: "Nosotros",
     href: "/aboutus",
   }
@@ -46,6 +57,7 @@ export function Header() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeItem, setActiveItem] = useState<string>('home');
   
   useEffect(() => {
     const handleScroll = () => {
@@ -59,6 +71,11 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
+  const handleItemClick = (id: string) => {
+    setActiveItem(id);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header className={cn(
       "sticky top-0 z-50 w-full transition-all duration-300",
@@ -67,7 +84,7 @@ export function Header() {
         : "bg-transparent"
     )}>
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex max-h-40 items-center justify-between">
+        <div className="flex max-h-40 items-center justify-between md:justify-start">
           <div className="flex p-4 items-center">
             <Link href="/" className="flex items-center space-x-2">
               <Image
@@ -80,16 +97,15 @@ export function Header() {
           </div>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-6 md:ml-10">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={() => handleItemClick(item.id)}
                 className={cn(
-                  "text-sm text font-medium transition-colors hover:text-primary flex items-center gap-1",
-                  pathname === item.href
-                    ? "text-primary"
-                    : "text-muted-foreground"
+                  "text text-base transition-colors hover:text-primary flex items-center gap-1",
+                  activeItem === item.id ? "text-primary" : "text-muted-foreground"
                 )}
               >
                 {item.icon}
@@ -125,13 +141,11 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={() => handleItemClick(item.id)}
                   className={cn(
-                    "flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary py-2",
-                    pathname === item.href
-                      ? "text-primary"
-                      : "text-muted-foreground"
+                    "flex items-center gap-2 text-base font-bold transition-colors hover:text-primary py-2",
+                    activeItem === item.id ? "text-primary" : "text-muted-foreground"
                   )}
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.icon}
                   {item.title}

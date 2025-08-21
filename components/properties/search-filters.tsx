@@ -58,12 +58,6 @@ export function SearchFilters({
 
   return (
     <div className="relative space-y-6 p-6 rounded-lg border">
-      <Image
-        src={WaterMark}
-        alt="Luxury Panama Real Estate"
-        fill
-        className="object-cover -z-10"
-        />
       <div className="space-y-2">
         <Select
           value={filters.transactionType}

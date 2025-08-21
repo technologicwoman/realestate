@@ -152,7 +152,7 @@ export function ContactForm({ propertyId, propertyName }: ContactFormProps) {
             <FormItem>
               <FormControl>
                 <Textarea 
-                  placeholder="Mensaje"
+                  placeholder="Mensaje opcional..."
                   rows={4}
                   {...field} 
                 />

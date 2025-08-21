@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, Mail, Phone, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
+import { Building2, Mail, Phone, MapPin, Facebook, Instagram, Twitter, LinkedinIcon } from "lucide-react";
 
 import Image from "next/image";
 import LogoBlackYellow from "@/app/assets/images/LogoBlackYellow.png";
@@ -46,14 +46,13 @@ export function Footer() {
                 target="_blank" 
                 className="text-icon hover:text-primary"
               >
-                <Twitter className="h-5 w-5" />
-                <span className="sr-only">Twitter</span>
+                <LinkedinIcon className="h-5 w-5" />
+                <span className="sr-only">LinkedIn</span>
               </Link>
             </div>
           </div>
           
           <div>
-            <h3 className="text-lg font-medium">Enlaces Rápidos</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link 
@@ -92,7 +91,7 @@ export function Footer() {
           </div>
           
           <div>
-            <h3 className="text-lg font-medium">Áreas Populares</h3>
+            <h3 className="text-lg font-medium">Áreas Destacadas</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link 

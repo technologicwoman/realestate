@@ -59,7 +59,7 @@ export function PropertyGallery({ mainImage, thumbnails }: PropertyGalleryProps)
           priority
         />
 
-        {/* Action buttons */}
+        {/* Action buttons
         <div className="absolute top-4 right-4 flex gap-2">
           <Button size="icon" variant="secondary" className="bg-white/90 hover:bg-white">
             <Heart className="h-5 w-5" />
@@ -67,7 +67,7 @@ export function PropertyGallery({ mainImage, thumbnails }: PropertyGalleryProps)
           <Button size="icon" variant="secondary" className="bg-white/90 hover:bg-white">
             <Share2 className="h-5 w-5" />
           </Button>
-        </div>
+        </div> */}
 
         {/* Navigation arrows */}
         {currentIndex > 0 && (

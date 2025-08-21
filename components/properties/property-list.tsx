@@ -1,10 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { PropertyCard } from "@/components/properties/property-card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PropertyViewModel } from "@/lib/domain/models";
+
+import WaterMark from "@/app/assets/images/WaterMark.png";
+
 
 interface PropertyListProps {
   properties: PropertyViewModel[];
@@ -39,9 +43,20 @@ export function PropertyList({ properties, currentPage, totalPages, searchParams
         </div>
       ) : (
         <>
-        <h1 className="text-3xl font-bold mb-8">Propiedades</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          
+        <h1 className="text-3xl font-bold mb-8">Resultados</h1>
+          <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* For mobile: repeated watermark using background image */}
+            <div
+              className="absolute inset-0 -z-10 bg-repeat bg-auto md:hidden"
+              style={{ backgroundImage: `url(${WaterMark.src})`, backgroundSize: "contain" }}
+            />
+            {/* For larger screens: use Image with fill */}
+            <Image
+              src={WaterMark}
+              alt="Bienes Raíces de Lujo en Panamá"
+              fill
+              className="object-cover -z-10 hidden md:block"
+            />
             {properties.map((property) => (
               <PropertyCard 
                 key={property.id} 
