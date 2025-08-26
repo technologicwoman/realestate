@@ -3,6 +3,8 @@ import { PropertyList } from "@/components/properties/property-list";
 import { SearchFilters } from "@/components/properties/search-filters";
 import { WasiService } from "@/lib/services";
 import { PropertyTypeViewModel, PropertyViewModel } from "@/lib/domain/models";
+import Loading from "./loading";
+import { getAllowedPropertyTypes } from "@/lib/static/config/PropertyConfig";
 
 // Items per page for pagination
 const ITEMS_PER_PAGE = 9;
@@ -32,8 +34,9 @@ export default async function PropertiesPage({
   
   // Fetch property types for filters
   let propertyTypes: PropertyTypeViewModel[]  = [];
-  propertyTypes = await wasiService.getPropertyTypes();
-  
+  // Replace the API call
+  // propertyTypes = await wasiService.getPropertyTypes();
+  propertyTypes = getAllowedPropertyTypes();
   
   // Convert zone classes to plain objects for client component
   const serializedZones = zones.map(zone => ({
@@ -78,13 +81,13 @@ export default async function PropertiesPage({
       <h1 className="text-3xl font-bold mb-8">Búsqueda Avanzada</h1>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-1">
-          <SearchFilters zones={serializedZones} propertyTypes={serializedPropertyTypes} />
+          <Suspense fallback={<Loading />}>
+            <SearchFilters zones={serializedZones} propertyTypes={serializedPropertyTypes} />
+          </Suspense>
         </div>
         
         <div className="lg:col-span-3">
-          <Suspense fallback={<div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-          </div>}>
+          <Suspense fallback={<Loading />}>
             <PropertyList 
               properties={properties} 
               currentPage={currentPage} 

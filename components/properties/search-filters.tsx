@@ -42,10 +42,6 @@ export function SearchFilters({
   const [searchText, setSearchText] = useState("");
   const [filteredZones, setFilteredZones] = useState(zones);
 
-  const handleFilterChange = (key: string, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-  };
-
   const applyFilters = () => {
     const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
@@ -54,6 +50,18 @@ export function SearchFilters({
       }
     });
     router.push(`/properties?${params.toString()}`);
+  };
+
+  const handleFilterChange = (key: string, value: string) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const formatPrice = (value: number) => {
+    return new Intl.NumberFormat('es-MX', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }).format(value);
   };
 
   return (
@@ -149,21 +157,30 @@ export function SearchFilters({
         </Select>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         <Label>Rango de Precio</Label>
-        <div className="grid grid-cols-2 gap-4">
-          <Input
-            type="number"
-            placeholder="Precio Mínimo"
-            value={filters.min_price}
-            onChange={(e) => handleFilterChange("min_price", e.target.value)}
+        <div className="pt-6 px-2">
+          <Slider
+            min={0}
+            max={2000000}
+            step={50000}
+            value={[parseInt(filters.min_price), parseInt(filters.max_price)]}
+            onValueChange={(value) => {
+              handleFilterChange("min_price", value[0].toString());
+              handleFilterChange("max_price", value[1].toString());
+            }}
+            className="relative"
+            aria-label="Price range"
+            minStepsBetweenThumbs={1}
           />
-          <Input
-            type="number"
-            placeholder="Precio Máximo"
-            value={filters.max_price}
-            onChange={(e) => handleFilterChange("max_price", e.target.value)}
-          />
+          <div className="flex justify-between items-center mt-4">
+            <div className="bg-background px-2 py-1 text-sm">
+              {formatPrice(parseInt(filters.min_price))}
+            </div>
+            <div className="bg-background px-2 py-1 text-sm">
+              {formatPrice(parseInt(filters.max_price))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -216,7 +233,6 @@ export function SearchFilters({
           ))}
         </div>
       </div>
-
       <Button className="w-full" onClick={applyFilters}>
         Aplicar Filtros
       </Button>

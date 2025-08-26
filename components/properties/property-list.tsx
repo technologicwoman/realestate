@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { PropertyCard } from "@/components/properties/property-card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PropertyViewModel } from "@/lib/domain/models";
 
+import { whatsappNumber } from "@/lib/static/config/BBConfig";
 import WaterMark from "@/app/assets/images/WaterMark.png";
 
 
@@ -21,6 +23,9 @@ export function PropertyList({ properties, currentPage, totalPages, searchParams
   const router = useRouter();
   const pathname = usePathname();
   const searchParamsObj = useSearchParams();
+
+  const whatsappMessage = 'Hola, quiero hablar con un asesor.';
+  const whatsappLink = `https://api.whatsapp.com/send/?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}&type=phone_number&app_absent=0`;
 
   // Function to handle pagination changes
   const handlePageChange = (newPage: number) => {
@@ -38,8 +43,17 @@ export function PropertyList({ properties, currentPage, totalPages, searchParams
     <div>
       {properties.length === 0 ? (
         <div className="text-center py-12">
-          <h3 className="text-xl font-medium">No propiedades encontradas.</h3>
-          <p className="text-muted-foreground mt-2">Intenta con otros criterios de búsqueda.</p>
+          <h3 className="text-xl font-medium">Ups... no encontramos propiedades con esos filtros.</h3>
+          <p className="text-muted-foreground mt-2">Pero no te preocupes, ¡tenemos más opciones para ti! 
+            <br />
+            Escríbenos y te ayudamos a encontrar la propiedad ideal según lo que buscas.
+          </p>
+          <Link href={whatsappLink} 
+            target="_blank">
+            <Button className="mt-4 cursor-pointer">
+            Hablar con un asesor
+            </Button>
+          </Link>
         </div>
       ) : (
         <>

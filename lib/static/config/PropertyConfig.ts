@@ -31,3 +31,18 @@ export const PropertyTypes: { [key: string]: string } = {
   '31': 'Campos, Chacras y Quintas',
   '32': 'Terreno'
 };
+
+
+const allowedPropertyTypes = ['1', '2', '20', '32', '26', '8', '13', '29', '7', '19', '3', '4'];
+
+export function isAllowed(propertyType: string): boolean {
+  return allowedPropertyTypes.includes(propertyType);
+}
+
+export function getAllowedPropertyTypes() {
+  return allowedPropertyTypes.map(id => ({
+    id: parseInt(id),
+    name: PropertyTypes[id],
+    displayName: PropertyTypes[id]
+  }));
+}

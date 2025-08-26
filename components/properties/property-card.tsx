@@ -61,8 +61,8 @@ export function PropertyCard({ property }: PropertyCardProps) {
             <span className="text-lg font-bold">
               {property.priceLabel}
             </span>
-          <Button variant="outline" asChild>
-            <Link href={`/properties/${property.slug}/${property.id}`}>Ver más</Link>
+          <Button variant="outline">
+            Ver más
           </Button>
           </div>
         </CardContent>
