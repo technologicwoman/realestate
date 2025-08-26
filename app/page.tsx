@@ -214,7 +214,7 @@ export default async function Home() {
                     ))}
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    "{review.review}"
+                    &ldquo;{review.review}&rdquo;
                   </p>
                   <div className="prose prose-sm pt-2 border-t">
                     <p className="font-semibold text-sm">{review.name}</p>
