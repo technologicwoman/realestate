@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,16 +15,19 @@ import {
 } from "@/components/ui/select";
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { MapPin } from "lucide-react";
+import { MapPin, Loader2 } from "lucide-react";
 import Image from "next/image";
 import WaterMark from "@/app/assets/images/WaterMark.png";
 import { PropertyTypeViewModel } from "@/lib/domain/models";
 
 export function SearchFilters({
-  zones, propertyTypes
+  zones, propertyTypes, onFiltersChange, isLoading
 }: {
-  zones: { id: number; displayString: string }[], propertyTypes: PropertyTypeViewModel[];
-}) {    
+  zones: { id: number; displayString: string }[];
+  propertyTypes: PropertyTypeViewModel[];
+  onFiltersChange?: (filters: any) => void;
+  isLoading?: boolean;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -42,7 +45,8 @@ export function SearchFilters({
   const [searchText, setSearchText] = useState("");
   const [filteredZones, setFilteredZones] = useState(zones);
 
-  const applyFilters = () => {
+  // Debounced filter application
+  const applyFilters = useCallback(() => {
     const params = new URLSearchParams();
     Object.entries(filters).forEach(([key, value]) => {
       if (value && value !== "all") {
@@ -50,8 +54,19 @@ export function SearchFilters({
       }
     });
     router.push(`/properties?${params.toString()}`);
-  };
+    
+    // Call the callback if provided
+    if (onFiltersChange) {
+      onFiltersChange(filters);
+    }
+  }, [filters, router, onFiltersChange]);
 
+  // Auto-apply filters when they change (with debounce)
+  useEffect(() => {
+    const timeoutId = setTimeout(applyFilters, 500);
+    return () => clearTimeout(timeoutId);
+  }, [applyFilters]);
+  
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
   };
@@ -72,7 +87,7 @@ export function SearchFilters({
           onValueChange={(value) => handleFilterChange("transactionType", value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="Categoría" />
+            <SelectValue placeholder="Categoría" />
           </SelectTrigger>
           <SelectContent>
           {["rent", "buy", "project"].map((type) => ( // CHANGE for constant sell, buy or project
@@ -233,8 +248,15 @@ export function SearchFilters({
           ))}
         </div>
       </div>
-      <Button className="w-full" onClick={applyFilters}>
-        Aplicar Filtros
+      <Button className="w-full" onClick={applyFilters} disabled={isLoading}>
+        {isLoading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Buscando...
+          </>
+        ) : (
+          "Aplicar Filtros"
+        )}
       </Button>
     </div>
   );
